@@ -1,0 +1,51 @@
+### common
+--include-function gpiod_version_string
+
+
+# chip open
+--include-function gpiod_chip_open
+--include-function gpiod_chip_open_by_name
+--include-function gpiod_chip_open_by_number
+--include-function gpiod_chip_open_by_label
+--include-function gpiod_chip_name
+--include-function gpiod_chip_label
+--include-function gpiod_chip_num_lines
+--include-function gpiod_chip_find_line
+--include-function gpiod_chip_get_line
+--include-function gpiod_chip_close
+
+
+### chip iterator
+--include-function gpiod_chip_iter_new
+--include-function gpiod_chip_iter_next
+--include-function gpiod_chip_iter_free
+
+
+### line operations
+--include-function gpiod_line_name
+--include-function gpiod_line_offset
+--include-function gpiod_line_direction
+--include-function gpiod_line_is_used
+--include-function gpiod_line_consumer
+--include-function gpiod_line_update
+
+--include-constant GPIOD_LINE_DIRECTION_INPUT
+--include-constant GPIOD_LINE_DIRECTION_OUTPUT
+
+
+### line request operations
+--include-function gpiod_line_request_input
+--include-function gpiod_line_request_input_flags
+--include-function gpiod_line_request_output
+--include-function gpiod_line_get_value
+--include-function gpiod_line_set_value
+--include-function gpiod_line_set_flags
+--include-function gpiod_line_release
+
+--include-constant GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN
+--include-constant GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE
+--include-constant GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW
+--include-constant GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE
+--include-constant GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_DOWN
+--include-constant GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP
+
