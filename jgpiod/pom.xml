@@ -8,6 +8,7 @@
   <artifactId>jgpio</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
+  <name>jgpio</name>
   <description>The libgpiod bindings for Java using the Java 22 FFM API.</description>
   <licenses>
     <license>
@@ -17,6 +18,19 @@
     </license>
   </licenses>
   <url>https://github.com/mk868/lib-jgpio</url>
+
+  <developers>
+    <developer>
+      <name>Maciej Kucharczyk</name>
+      <email>maciej.kucharczyk@hotmail.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com:mk868/lib-jgpio.git</connection>
+    <developerConnection>scm:git:git@github.com:mk868/lib-jgpio.git</developerConnection>
+    <url>https://github.com/mk868/lib-jgpio/tree/main</url>
+  </scm>
 
   <properties>
     <maven.compiler.release>22</maven.compiler.release>
@@ -201,5 +215,29 @@ limitations under the License.
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.7</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
