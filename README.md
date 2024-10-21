@@ -9,11 +9,38 @@ Key features:
 * JPMS
 * JSpecify annotations
 
+API allows to:
+
+- Listing information about available chips and lines
+- Reading GPIO pin values
+    - Option to set bias: high impedance, pull-up, pull-down
+- Writing GPIO pin values
+
 ## Usage
+
+Add the library to your project:
+
+```xml
+<dependency>
+  <groupId>eu.soft-pol.lib.jgpio</groupId>
+  <artifactId>jgpio</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+If using JPMS, add `requires` to your `module-info.java`:
+
+```java
+module yourapp {
+  requires eu.softpol.lib.jgpio;
+}
+```
 
 Sample code demonstrating the Blink example:
 
 ```java
+import eu.softpol.lib.jgpio.Jgpio;
+
 public static void main(final String[] args) throws InterruptedException {
   try (
       var chip = Jgpio.getInstance()
@@ -32,14 +59,6 @@ public static void main(final String[] args) throws InterruptedException {
 ```
 
 For details and more examples, see [examples/README.md](examples/README.md).
-
-## How to build
-
-```shell
-./prepare
-cd jgpiod
-mvn install
-```
 
 ## System Preparation
 
