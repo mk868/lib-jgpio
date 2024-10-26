@@ -17,18 +17,26 @@ package eu.softpol.lib.jgpio;
 
 import java.io.Closeable;
 
-/// Input line session, must be closed after use
+/// The input line session represents the line requested for reading. The interface provides methods
+/// responsible for managing the input line.
 ///
-/// The methods of this class should not be called after [Chip#close()].
+/// The methods of this interface should not be called after [Chip#close()].
 public interface LineInputSession extends Closeable {
 
+  /// Sets the bias for the input line.
+  ///
+  /// @param bias the desired input line bias
   void setBias(Bias bias);
 
-  /// Read input line signal level
+  /// Reads the current value of the input line.
   ///
-  /// @return signal level: `true`(HIGH) or `false`(LOW)
+  /// @return the signal level: `true` if the input line is high, `false` if the input line is low
   boolean read();
 
+  /// Closes the line input session, releasing any associated resources.
+  ///
+  /// Once this method is called, further interactions with the session are not allowed and will
+  /// result with [IllegalStateException].
   @Override
   void close();
 

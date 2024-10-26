@@ -17,16 +17,22 @@ package eu.softpol.lib.jgpio;
 
 import java.io.Closeable;
 
-/// Output line session, must be closed after use
+/// The output line session represents the line requested for writing. The interface provides
+/// methods responsible for managing the output line.
 ///
-/// The methods of this class should not be called after [Chip#close()].
+/// The methods of this interface should not be called after [Chip#close()].
 public interface LineOutputSession extends Closeable {
 
-  /// Write a new value of output line
+  /// Writes the new value of the output line.
   ///
-  /// @param value signal level: `true`(HIGH) or `false`(LOW)
+  /// @param value the signal level: `true` if the output line needs to be high, `false` if the
+  ///              output line needs to be low
   void write(boolean value);
 
+  /// Closes the line output session, releasing any associated resources.
+  ///
+  /// Once this method is called, further interactions with the session are not allowed and will
+  /// result with [IllegalStateException].
   @Override
   void close();
 

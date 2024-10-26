@@ -15,8 +15,16 @@
  */
 package eu.softpol.lib.jgpio;
 
-/// Line direction
+/// Represents the direction of a GPIO line.
 public enum Direction {
+  /// Represents the direction of a GPIO line set to input mode.
+  ///
+  /// When a GPIO line is configured as INPUT, it is used to read electrical signals from external
+  /// devices. This mode is typically used for sensors, switches, or other input devices.
   INPUT,
+  /// Represents the direction of a GPIO line set to output mode.
+  ///
+  /// When a GPIO line is configured as OUTPUT, it is used to send electrical signals to external
+  /// devices. This mode is typically used for LEDs, actuators, or other output devices.
   OUTPUT;
 }

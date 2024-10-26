@@ -18,50 +18,66 @@ package eu.softpol.lib.jgpio;
 import java.io.Closeable;
 import java.util.Optional;
 
-/// This class represents GPIO controller chip
+/// Represents a GPIO controller chip with methods to retrieve information about the chip and its
+/// lines.
+///
+/// The chip object must be closed after use.
 public interface Chip extends Closeable {
 
-  /// Get chip name
+  /// Retrieves the name of the GPIO controller chip.
+  ///
+  /// @return the name of the chip.
   String name();
 
-  /// Get chip label
+  /// Retrieves the label of the GPIO controller chip.
+  ///
+  /// @return the label of the chip.
   String label();
 
-  /// Get number of lines in this chip
+  /// Retrieves the number of lines associated with the GPIO controller chip.
+  ///
+  /// @return the number of lines
   int countLines();
 
-  /// Find line with offset
+  /// Finds a line by its offset.
   ///
-  /// @param offset non-negative offset
-  /// @return line with specified offset or empty
+  /// @param offset the non-negative offset
+  /// @return an optional containing the line with the specified offset, or an empty optional if no
+  /// line exists at the given offset
   Optional<Line> findLine(int offset);
 
-  /// Get line by offset
+  /// Gets a line by its offset.
   ///
-  /// @param offset non-negative offset
-  /// @return line with specified offset
-  /// @throws JgpioException when line not found
+  /// @param offset the non-negative offset
+  /// @return the line with the specified offset
+  /// @throws JgpioException if no line exists at the given offset
   default Line getLine(int offset) {
     return findLine(offset)
         .orElseThrow(() -> new JgpioException("Cannot find line with offset " + offset));
   }
 
-  /// Find first line with given name
+  /// Finds the first line with the specified name.
   ///
-  /// @param name line name
-  /// @return line with specified name or empty
+  /// @param name the name of the line
+  /// @return an optional containing the line with the specified name, or an empty optional if no
+  /// line exists with the given name
   Optional<Line> findLine(String name);
 
-  /// Get first line with given name or throw exception when line not found
+  /// Gets the first line with the specified name or throw an exception when line not found
   ///
-  /// @param name line name
-  /// @return line with specified name
-  /// @throws JgpioException when line not found
+  /// @param name the name of the line
+  /// @return the line with the specified name
+  /// @throws JgpioException if no line exists with the given name
   default Line getLine(String name) {
     return findLine(name)
         .orElseThrow(() -> new JgpioException("Cannot find line with name '" + name + "'"));
   }
 
+  /// Closes the GPIO controller chip, releasing any resources associated with it.
+  ///
+  /// This method must be called when the chip is no longer needed to ensure proper cleanup of
+  /// resources. Once this method is called, further interactions with the chip or its lines are not
+  /// allowed and will result with {@link IllegalStateException}.
   @Override
   void close();
 }

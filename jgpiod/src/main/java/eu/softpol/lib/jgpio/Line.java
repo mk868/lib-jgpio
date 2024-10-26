@@ -17,49 +17,51 @@ package eu.softpol.lib.jgpio;
 
 import org.jspecify.annotations.Nullable;
 
-/// Chip line definition
+/// Interface representing a GPIO line.
 ///
 /// The methods of this class should not be called after [Chip#close()].
 public interface Line {
 
-  /// Get line offset
+  /// Retrieves the offset of the GPIO line.
   ///
-  /// @return non-negative offset number
+  /// @return the offset of the GPIO line
   int offset();
 
-  /// get line name
+  /// Retrieves the name of the GPIO line.
   ///
-  /// @return line name or null
+  /// @return the name of the GPIO line, or null if the line has no name
   public @Nullable String name();
 
-  /// get the name of the consumer which current uses the line, the value may not be null only when
-  /// [#isUsed()] returns `true`.
+  /// Retrieves the consumer of the GPIO line.
   ///
-  /// @return consumer name
+  /// @return the name of the consumer using the line, or null if the line is not being used or if
+  ///  the consumer is not defined
   public @Nullable String consumer();
 
-  /// Get the currently defined line direction
+  /// Retrieves the current direction of the GPIO line.
+  ///
+  /// @return the direction of the GPIO line
   Direction direction();
 
-  /// check if the line is in use
+  /// Checks if the GPIO line is currently in use.
   ///
-  /// @return true when in use
+  /// @return the `true` if the line is in use,`false` otherwise
   boolean isUsed();
 
-  /// Request line for reading
+  /// Opens the GPIO line as an input.
   ///
-  /// @return line session, must be closed after use
+  /// @return the session for the input line, which must be closed after use
   LineInputSession openAsInput();
 
-  /// Request line for reading
+  /// Opens the GPIO line as an input with the specified bias.
   ///
-  /// @param bias input line bias value
-  /// @return line session, must be closed after use
+  /// @param bias the desired input line bias
+  /// @return the session for the input line, which must be closed after use
   LineInputSession openAsInput(Bias bias);
 
-  /// Request line for writing
+  /// Opens the GPIO line as an output.
   ///
-  /// @return line session, must be closed after use
+  /// @return the session for the output line, which must be closed after use
   LineOutputSession openAsOutput();
 
 }

@@ -25,48 +25,48 @@ import org.jspecify.annotations.Nullable;
 /// @see Jgpio#getInstance() for the default Jgpio implementation
 public interface Jgpio {
 
-  /// Open chip by name
+  /// Opens a GPIO chip by its name.
   ///
-  /// @param name chip name, for example `gpiochip1`
-  /// @return chip session, must be closed after use
-  /// @throws JgpioException when chip not found
+  /// @param name the name of the GPIO chip to open, for example `gpiochip1`
+  /// @return a Chip instance, must be closed after use
+  /// @throws JgpioException if the chip cannot be found
   Chip openChipByName(String name);
 
-  /// Open chip by label
+  /// Opens a GPIO chip by its label.
   ///
-  /// @param label chip label
-  /// @return chip session, must be closed after use
-  /// @throws JgpioException when chip not found
+  /// @param label the label of the GPIO chip to open
+  /// @return a Chip instance, must be closed after use
+  /// @throws JgpioException if the chip cannot be found
   Chip openChipByLabel(String label);
 
-  /// Open chip by path
+  /// Opens a GPIO chip by its file system path.
   ///
-  /// @param path chip path in the filesystem
-  /// @return chip session, must be closed after use
-  /// @throws JgpioException when chip not found
+  /// @param path the file system path to the GPIO chip
+  /// @return a Chip instance, must be closed after use
+  /// @throws JgpioException if the chip cannot be found
   Chip openChipByPath(Path path);
 
-  /// Open chip by number
+  /// Opens a GPIO chip by its number.
   ///
-  /// @param number chip number
-  /// @return chip session, must be closed after use
-  /// @throws JgpioException when chip not found
+  /// @param number the number of the GPIO chip to open
+  /// @return a Chip instance, must be closed after use
+  /// @throws JgpioException if the chip cannot be found
   Chip openChipByNumber(int number);
 
-  /// List all chips in the system
+  /// Retrieves a list of all available GPIO chips on the system.
   ///
-  /// @return list of chips
+  /// @return a list of {@link ChipInfo} instances representing the available GPIO chips
+  /// @throws JgpioException if there is an error accessing the GPIO chips
   List<ChipInfo> getChips();
 
-  /// Get native library version
+  /// Retrieves the version of the libgpiod library.
   ///
-  /// @return version string
+  /// @return a string representing the version
   public @Nullable String version();
 
-
-  /// Get Jgpio instance
+  /// Provides the default implementation of the {@link Jgpio} interface.
   ///
-  /// @return Jgpio instance
+  /// @return An instance of the {@link Jgpio} interface.
   static Jgpio getInstance() {
     return new GpiodJgpio();
   }

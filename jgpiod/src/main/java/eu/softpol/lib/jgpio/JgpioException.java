@@ -15,13 +15,20 @@
  */
 package eu.softpol.lib.jgpio;
 
-/// Base exception class
+/// {@link JgpioException} represents errors specific to the JGPIO library operations.
 public class JgpioException extends RuntimeException {
 
+  /// Constructs a new {@link JgpioException} with the specified detail message.
+  ///
+  /// @param message the detail message to describe the error
   public JgpioException(String message) {
     super(message);
   }
 
+  /// Constructs a new {@link JgpioException} with the specified detail message and cause.
+  ///
+  /// @param message the detail message to describe the error
+  /// @param cause   the cause of the exception
   public JgpioException(String message, Throwable cause) {
     super(message, cause);
   }

@@ -15,27 +15,31 @@
  */
 package eu.softpol.lib.jgpio;
 
-/// Immutable information about chip
+/// An interface that represents immutable information of a GPIO chip.
+///
+/// An instance of this interface can be considered a snapshot of the chip's state. No IO actions
+/// are performed when calling {@link ChipInfo#name()}, {@link ChipInfo#label()} or
+/// {@link ChipInfo#countLines()} methods.
 public interface ChipInfo {
 
-  /// Get chip name
+  /// Gets the name of the GPIO chip.
   ///
-  /// @return Chip name
+  /// @return the name of the chip
   String name();
 
-  /// Get chip label
+  /// Gets the label of the GPIO chip.
   ///
-  /// @return chip label
+  /// @return the label of the chip
   String label();
 
-  /// Count lines
+  /// Gets the number of lines associated with the GPIO chip.
   ///
-  /// @return number of lines
+  /// @return the number of lines
   int countLines();
 
-  /// Open chip
+  /// Opens the GPIO chip represented by this ChipInfo interface.
   ///
-  /// @return chip object
+  /// @return a Chip instance that allows interaction with the GPIO controller chip
   /// @see Jgpio#openChipByName(String)
   Chip open();
 

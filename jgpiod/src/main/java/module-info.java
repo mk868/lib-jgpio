@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import org.jspecify.annotations.NullMarked;
 
+/// This module descriptor defines the module `eu.softpol.lib.jgpio`.
 @NullMarked
 module eu.softpol.lib.jgpio {
   requires org.jspecify;

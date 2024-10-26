@@ -15,9 +15,14 @@
  */
 package eu.softpol.lib.jgpio;
 
-/// Input line bias
+/// Enum representing input line bias.
+///
+/// The Bias defines the possible bias resistors that can be applied to an input line.
 public enum Bias {
+  /// Bias is disabled, the line is in a high impedance state.
   HIGH_IMPEDANCE,
+  /// The internal pull-up resistor is active on the line.
   PULL_UP,
+  /// The internal pull-down resistor is active on the line.
   PULL_DOWN;
 }
