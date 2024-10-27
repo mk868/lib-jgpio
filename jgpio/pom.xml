@@ -39,6 +39,7 @@
     <log4j.version>2.24.1</log4j.version>
     <generated.sources.directory>${project.build.directory}/generated-sources/ffm
     </generated.sources.directory>
+    <jextract.bin>jextract</jextract.bin>
     <jextract.package>eu.softpol.lib.jgpio.internal.ffm</jextract.package>
   </properties>
 
@@ -131,7 +132,7 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <executable>jextract</executable>
+              <executable>${jextract.bin}</executable>
               <commandlineArgs>
                 --target-package ${jextract.package}.libgpiod
                 --output "${generated.sources.directory}"
