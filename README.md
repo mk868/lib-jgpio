@@ -7,12 +7,13 @@ Key features:
 
 * FFM + jextract
 * JPMS
+* System.Logger
 * JSpecify annotations
 
-API allows to:
+The API allows you to:
 
-- Listing information about available chips and lines
-- Reading GPIO pin values
+- List information about available chips and lines
+- Read GPIO pin values
     - Option to set bias: high impedance, pull-up, pull-down
 - Writing GPIO pin values
 
@@ -28,7 +29,7 @@ Add the library to your project:
 </dependency>
 ```
 
-If using JPMS, add `requires` to your `module-info.java`:
+If you are using JPMS, add `requires` to your `module-info.java` file:
 
 ```java
 module yourapp {
@@ -36,7 +37,7 @@ module yourapp {
 }
 ```
 
-Sample code demonstrating the Blink example:
+The sample code demonstrating the Blink example:
 
 ```java
 import eu.softpol.lib.jgpio.Jgpio;
@@ -64,7 +65,7 @@ For details and more examples, see [examples/README.md](examples/README.md).
 
 ### Install libgpiod
 
-Install the gpiod library on the embedded device.
+Install the libgpiod library on the embedded device.
 
 On Debian:
 
@@ -74,19 +75,20 @@ apt install libgpiod
 
 ### GPIO permissions
 
-Give the user GPIO permissions, before this stage, check if your user doesn't already have
-permissions granted using command:
+Before granting the user GPIO permissions, check if the user already has the necessary permissions
+by using the following command:
 
 ```shell
 gpioinfo
 ```
 
-If the command does not display an error message, it means you already have permissions.
+If the command does not display any error message, it means you already have the required
+permissions.
 
 #### Raspberry PI
 
-Raspberry already has an environment set up for GPIO user interaction, all you need is to add your
-user to the `gpio` group:
+The Raspberry Pi already has an environment set up for GPIO user interactions.
+All you need to do is add your user to the `gpio` group:
 
 ```shell
 usermod -a -G gpio <username>
@@ -94,11 +96,11 @@ usermod -a -G gpio <username>
 
 [More info](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#permissions)
 
-After logging in again, try to use `gpioinfo` command to verify access.
+After logging in again, try to call the `gpioinfo` command to verify access.
 
 #### Other boards
 
-You will need to create a new `gpio` group and add your user to this group:
+You will need to create a new `gpio` group and add your user to this group.
 
 On Debian:
 
@@ -107,19 +109,19 @@ groupadd gpio
 usermod -a -G gpio <username>
 ```
 
-create `/etc/udev/rules.d/60-gpio.rules` with content:
+Next, create the `/etc/udev/rules.d/60-gpio.rules` rule file with the following content:
 
 ```
 SUBSYSTEM=="gpio", KERNEL=="gpiochip*", GROUP="gpio", MODE="0660"
 ```
 
-After restart, try to use `gpioinfo` command to verify access.
+After restart, try to call the `gpioinfo` command to verify access.
 
 ### Loading libgpiod
 
 By default, JVM looks for libraries in directories defined in the `java.library.path` environment
 variable.  
-You can list these dirs using command:
+You can list these directories using the following command:
 
 ```shell
 echo 'System.getProperty("java.library.path")' | jshell --feedback concise
@@ -131,7 +133,7 @@ Sample output:
 jshell> $1 ==> "/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"
 ```
 
-To quickly get started you can create a link to the `libgpiod.so` file in one of these directories:
+To quickly get started, you can create a link to the `libgpiod.so` file in one of these directories:
 
 ```shell
 mkdir -p /usr/java/packages/lib
@@ -140,7 +142,7 @@ ln -s /lib/aarch64-linux-gnu/libgpiod.so.2 /usr/java/packages/lib/libgpiod.so
 
 #### Extra: `LD_LIBRARY_PATH`
 
-Your system may require you to specify the library dir in the `LD_LIBRARY_PATH` environment
+Your system may require you to specify the library directory in the `LD_LIBRARY_PATH` environment
 variable.  
 This can be done as follows:
 
