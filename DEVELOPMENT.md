@@ -9,6 +9,6 @@
 
 ```shell
 ./prepare
-cd jgpiod
+cd jgpio
 mvn install
 ```
