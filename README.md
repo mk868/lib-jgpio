@@ -67,6 +67,8 @@ To grant native access for the JGPIO library, use the following parameter with t
 --enable-native-access=eu.softpol.lib.jgpio
 ```
 
+[More info](https://openjdk.org/jeps/472#Enabling-native-access)
+
 ## System Preparation
 
 ### Install libgpiod
@@ -143,6 +145,8 @@ To quickly get started, you can create a link to the `libgpiod.so` file in one o
 
 ```shell
 mkdir -p /usr/java/packages/lib
+# to show the library location use:
+#   ldconfig -p | grep libgpiod.so
 ln -s /lib/aarch64-linux-gnu/libgpiod.so.2 /usr/java/packages/lib/libgpiod.so
 ```
 
