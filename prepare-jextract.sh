@@ -10,7 +10,7 @@ function get_jextract() {
   curl -O https://download.java.net/java/early_access/jextract/22/5/"$file"
   tar -xf "$file"
   rm -fv "$file"
-  mv jextract-22 "$jextract_dir"
+  mv -v jextract-22 "$jextract_dir"
 }
 
 get_jextract

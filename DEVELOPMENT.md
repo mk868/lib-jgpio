@@ -20,5 +20,5 @@ If you want to download and use a fixed version of `jextract`, use the following
 
 ```shell
 ./prepare-jextract.sh
-mvn install -Djextract.bin=../jextract/bin
+mvn install -Djextract.bin=../jextract/bin/jextract
 ```
