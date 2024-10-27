@@ -37,6 +37,6 @@ jobs:
         ./prepare.sh
         mvn -B install --file jgpio/pom.xml -Djextract.bin=../jextract/bin/jextract
 
-    - name: Build iT with Maven
+    - name: Build IT with Maven
       run: mvn -B package --file jgpio-it/pom.xml
       # TODO run IT on remote Orange Pi One Plus
