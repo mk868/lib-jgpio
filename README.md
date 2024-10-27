@@ -61,6 +61,12 @@ public static void main(final String[] args) throws InterruptedException {
 
 For details and more examples, see [examples/README.md](examples/README.md).
 
+To grant native access for the JGPIO library, use the following parameter with the `java` command:
+
+```
+--enable-native-access=eu.softpol.lib.jgpio
+```
+
 ## System Preparation
 
 ### Install libgpiod
