@@ -32,6 +32,11 @@ jobs:
       if: steps.cache-jextract.outputs.cache-hit != 'true'
       run: ./prepare-jextract.sh
 
+    - name: Check sources with Maven
+      run: |
+        mvn -B --file jgpio/pom.xml license:check
+      # TODO check formatting
+
     - name: Build with Maven
       run: |
         ./prepare.sh
