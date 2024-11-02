@@ -23,6 +23,8 @@ import java.io.Closeable;
 /// The methods of this interface should not be called after [Chip#close()].
 public interface LineOutputSession extends Closeable {
 
+  void setDriveMode(DriveMode driveMode);
+
   /// Writes the new value of the output line.
   ///
   /// @param value the signal level: `true` if the output line needs to be high, `false` if the

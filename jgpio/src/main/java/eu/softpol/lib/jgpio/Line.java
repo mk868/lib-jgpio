@@ -64,4 +64,6 @@ public interface Line {
   /// @return the session for the output line, which must be closed after use
   LineOutputSession openAsOutput();
 
+  LineOutputSession openAsOutput(DriveMode driveMode);
+
 }
