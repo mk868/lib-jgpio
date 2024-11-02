@@ -37,6 +37,7 @@
 --include-function gpiod_line_request_input
 --include-function gpiod_line_request_input_flags
 --include-function gpiod_line_request_output
+--include-function gpiod_line_request_output_flags
 --include-function gpiod_line_get_value
 --include-function gpiod_line_set_value
 --include-function gpiod_line_set_flags

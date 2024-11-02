@@ -17,6 +17,7 @@ package eu.softpol.lib.jgpio.internal.gpiod;
 
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineOutputSession;
+import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
@@ -39,6 +40,29 @@ public class GpiodLineOutputSession extends GpiodLineSession implements LineOutp
     logger.log(Level.DEBUG, "Line requested");
   }
 
+  public GpiodLineOutputSession(GpiodChip chip, MemorySegment linePtr, DriveMode driveMode) {
+    super(chip, linePtr);
+    int flags = toFlags(driveMode);
+    try (var arena = Arena.ofConfined()) {
+      var consumerPtr = arena.allocateFrom(GpiodChip.CONSUMER_NAME, StandardCharsets.US_ASCII);
+      if (gpiod_h.gpiod_line_request_output_flags(this.linePtr, consumerPtr, flags, 0) != 0) {
+        throw new JgpioException("JGPIO line request failed");
+      }
+    }
+    logger.log(Level.DEBUG, "Line requested");
+  }
+
+  @Override
+  public void setDriveMode(DriveMode driveMode) {
+    throwWhenChipClosed();
+    throwWhenLineSessionClosed();
+    int flags = toFlags(driveMode);
+    logger.log(Level.DEBUG, "Set driveMode to {0}", driveMode);
+    if (gpiod_h.gpiod_line_set_flags(linePtr, flags) != 0) {
+      throw new JgpioException("Cannot set driveMode");
+    }
+  }
+
   @Override
   public void write(boolean value) {
     throwWhenChipClosed();
@@ -49,4 +73,15 @@ public class GpiodLineOutputSession extends GpiodLineSession implements LineOutp
     }
   }
 
+  private int toFlags(DriveMode driveMode) {
+    return switch (driveMode) {
+      case PUSH_PULL -> 0;
+      case OPEN_DRAIN -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN();
+      case OPEN_DRAIN_PULL_UP -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN()
+          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP();
+      case OPEN_SOURCE -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE();
+      case OPEN_SOURCE_PULL_DOWN -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE()
+          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_DOWN();
+    };
+  }
 }

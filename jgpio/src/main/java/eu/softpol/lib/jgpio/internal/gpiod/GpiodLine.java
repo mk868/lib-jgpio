@@ -22,6 +22,7 @@ import eu.softpol.lib.jgpio.Direction;
 import eu.softpol.lib.jgpio.Line;
 import eu.softpol.lib.jgpio.LineInputSession;
 import eu.softpol.lib.jgpio.LineOutputSession;
+import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.lang.foreign.MemorySegment;
 import org.jspecify.annotations.Nullable;
@@ -97,6 +98,12 @@ public class GpiodLine implements Line {
   public LineOutputSession openAsOutput() {
     throwWhenChipClosed();
     return new GpiodLineOutputSession(chip, linePtr);
+  }
+
+  @Override
+  public LineOutputSession openAsOutput(DriveMode driveMode) {
+    throwWhenChipClosed();
+    return new GpiodLineOutputSession(chip, linePtr, driveMode);
   }
 
   @Override
