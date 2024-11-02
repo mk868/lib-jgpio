@@ -15,10 +15,24 @@
  */
 package eu.softpol.lib.jgpio;
 
+/// Enum representing the drive modes for a GPIO line.
+///
+/// The DriveMode defines the configuration of the GPIO line's output driver.
 public enum DriveMode {
+  /// Drive mode where the GPIO line is actively driven to both high and low states.
   PUSH_PULL,
+  /// Drive mode where the GPIO line is set to open-drain. In this mode, the GPIO can either drive
+  /// the line low or leave it floating.
   OPEN_DRAIN,
+  /// Drive mode where the GPIO line is set to open-drain with an internal pull-up resistor. In this
+  /// mode, the GPIO can drive the line low, or use the pull-up resistor to bring the line to a high
+  /// state.
   OPEN_DRAIN_PULL_UP,
+  /// Drive mode where the GPIO line is set to open-source. In this mode, the GPIO can either drive
+  /// the line high or leave it floating.
   OPEN_SOURCE,
+  /// Drive mode where the GPIO line is set to open-source with an internal pull-down resistor. In
+  /// this mode, the GPIO can drive the line high, or use the pull-down resistor to bring the line
+  /// to a low state.
   OPEN_SOURCE_PULL_DOWN;
 }

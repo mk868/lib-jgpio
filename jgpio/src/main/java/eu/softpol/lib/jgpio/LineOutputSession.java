@@ -23,6 +23,9 @@ import java.io.Closeable;
 /// The methods of this interface should not be called after [Chip#close()].
 public interface LineOutputSession extends Closeable {
 
+  /// Sets the drive mode for the output line.
+  ///
+  /// @param driveMode the drive mode to be set for the GPIO line
   void setDriveMode(DriveMode driveMode);
 
   /// Writes the new value of the output line.

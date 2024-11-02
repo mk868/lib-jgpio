@@ -21,7 +21,7 @@ class LineSessionBiasChangeIT {
 
   @ParameterizedTest
   @FieldSource("PINS")
-  void read_value_should_read_actual_bias_value_on_hanging_line(TestPin inputWithBiasPin) {
+  void should_read_value_matching_bias_on_hanging_line(TestPin inputWithBiasPin) {
     var jgpio = Jgpio.getInstance();
     try (var inputChip1 = jgpio.openChipByName(inputWithBiasPin.chipName());
         var biasInputLine = inputChip1.getLine(inputWithBiasPin.lineOffset())
@@ -39,8 +39,36 @@ class LineSessionBiasChangeIT {
   }
 
   @ParameterizedTest
+  @FieldSource("PINS")
+  void should_read_true_for_pull_up_bias_on_hanging_line(TestPin inputWithBiasPin) {
+    var jgpio = Jgpio.getInstance();
+    try (var inputChip1 = jgpio.openChipByName(inputWithBiasPin.chipName());
+        var biasInputLine = inputChip1.getLine(inputWithBiasPin.lineOffset())
+            .openAsInput(Bias.PULL_UP);
+    ) {
+      assertThat(biasInputLine.read())
+          .as("Input line level")
+          .isTrue();
+    }
+  }
+
+  @ParameterizedTest
+  @FieldSource("PINS")
+  void should_read_false_for_pull_down_bias_on_hanging_line(TestPin inputWithBiasPin) {
+    var jgpio = Jgpio.getInstance();
+    try (var inputChip1 = jgpio.openChipByName(inputWithBiasPin.chipName());
+        var biasInputLine = inputChip1.getLine(inputWithBiasPin.lineOffset())
+            .openAsInput(Bias.PULL_DOWN);
+    ) {
+      assertThat(biasInputLine.read())
+          .as("Input line level")
+          .isFalse();
+    }
+  }
+
+  @ParameterizedTest
   @FieldSource("COUPLED_LINES")
-  void high_impedance_line_should_detect_bias_change_on_coupled_line(TwoPins coupledLines) {
+  void should_read_value_matching_bias_on_coupled_line(TwoPins coupledLines) {
     var inputWithBiasPin = coupledLines.pin1();
     var inputNoBiasPin = coupledLines.pin2();
 
@@ -57,6 +85,46 @@ class LineSessionBiasChangeIT {
           .as("Input line level")
           .isTrue();
       biasInputLine.setBias(Bias.PULL_DOWN);
+      assertThat(highImpedanceLine.read())
+          .as("Input line level")
+          .isFalse();
+    }
+  }
+
+  @ParameterizedTest
+  @FieldSource("COUPLED_LINES")
+  void should_read_true_for_pull_up_bias_on_coupled_line(TwoPins coupledLines) {
+    var inputWithBiasPin = coupledLines.pin1();
+    var inputNoBiasPin = coupledLines.pin2();
+
+    var jgpio = Jgpio.getInstance();
+    try (var inputChip1 = jgpio.openChipByName(inputWithBiasPin.chipName());
+        var _ = inputChip1.getLine(inputWithBiasPin.lineOffset())
+            .openAsInput(Bias.PULL_UP);
+        var inputChip2 = jgpio.openChipByName(inputNoBiasPin.chipName());
+        var highImpedanceLine = inputChip2.getLine(inputNoBiasPin.lineOffset())
+            .openAsInput(Bias.HIGH_IMPEDANCE);
+    ) {
+      assertThat(highImpedanceLine.read())
+          .as("Input line level")
+          .isTrue();
+    }
+  }
+
+  @ParameterizedTest
+  @FieldSource("COUPLED_LINES")
+  void should_read_true_for_pull_down_bias_on_coupled_line(TwoPins coupledLines) {
+    var inputWithBiasPin = coupledLines.pin1();
+    var inputNoBiasPin = coupledLines.pin2();
+
+    var jgpio = Jgpio.getInstance();
+    try (var inputChip1 = jgpio.openChipByName(inputWithBiasPin.chipName());
+        var _ = inputChip1.getLine(inputWithBiasPin.lineOffset())
+            .openAsInput(Bias.PULL_DOWN);
+        var inputChip2 = jgpio.openChipByName(inputNoBiasPin.chipName());
+        var highImpedanceLine = inputChip2.getLine(inputNoBiasPin.lineOffset())
+            .openAsInput(Bias.HIGH_IMPEDANCE);
+    ) {
       assertThat(highImpedanceLine.read())
           .as("Input line level")
           .isFalse();

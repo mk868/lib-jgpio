@@ -15,9 +15,9 @@
  */
 package eu.softpol.lib.jgpio.internal.gpiod;
 
+import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineOutputSession;
-import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
@@ -75,11 +75,13 @@ public class GpiodLineOutputSession extends GpiodLineSession implements LineOutp
 
   private int toFlags(DriveMode driveMode) {
     return switch (driveMode) {
-      case PUSH_PULL -> 0;
-      case OPEN_DRAIN -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN();
+      case PUSH_PULL -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();
+      case OPEN_DRAIN -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN()
+          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();
       case OPEN_DRAIN_PULL_UP -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN()
           + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP();
-      case OPEN_SOURCE -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE();
+      case OPEN_SOURCE -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE()
+          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();
       case OPEN_SOURCE_PULL_DOWN -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE()
           + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_DOWN();
     };

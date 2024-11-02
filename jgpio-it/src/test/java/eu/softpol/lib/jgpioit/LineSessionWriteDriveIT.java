@@ -40,7 +40,7 @@ class LineSessionWriteDriveIT {
         of(OPEN_DRAIN, Bias.HIGH_IMPEDANCE, false, false),
         //of(OPEN_DRAIN, Bias.HIGH_IMPEDANCE, true, undefined),
         of(OPEN_DRAIN, Bias.PULL_UP, false, false),
-        of(OPEN_DRAIN, Bias.PULL_UP, true, true),//???
+        of(OPEN_DRAIN, Bias.PULL_UP, true, true),
         of(OPEN_DRAIN, Bias.PULL_DOWN, false, false),
         of(OPEN_DRAIN, Bias.PULL_DOWN, true, false),
         // OPEN_DRAIN_PULL_UP
@@ -55,7 +55,7 @@ class LineSessionWriteDriveIT {
         of(OPEN_SOURCE, Bias.HIGH_IMPEDANCE, true, true),
         of(OPEN_SOURCE, Bias.PULL_UP, false, true),
         of(OPEN_SOURCE, Bias.PULL_UP, true, true),
-        of(OPEN_SOURCE, Bias.PULL_DOWN, false, false),//???
+        of(OPEN_SOURCE, Bias.PULL_DOWN, false, false),
         of(OPEN_SOURCE, Bias.PULL_DOWN, true, true),
         // OPEN_SOURCE_PULL_DOWN
         of(OPEN_SOURCE_PULL_DOWN, Bias.HIGH_IMPEDANCE, false, false),
