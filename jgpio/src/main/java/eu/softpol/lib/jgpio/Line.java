@@ -64,6 +64,10 @@ public interface Line {
   /// @return the session for the output line, which must be closed after use
   LineOutputSession openAsOutput();
 
+  /// Opens the GPIO line as an output with the specified drive mode.
+  ///
+  /// @param driveMode the drive mode to be set for the GPIO line
+  /// @return the session for the output line, which must be closed after use
   LineOutputSession openAsOutput(DriveMode driveMode);
 
 }
