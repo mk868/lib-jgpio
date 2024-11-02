@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.FieldSource;
 
 class LineByOffsetNotExistIT {
 
-  static List<TestPinWithInvalidOffset> NON_EXISTING_PINS = List.of(
+  static final List<TestPinWithInvalidOffset> NON_EXISTING_PINS = List.of(
       new TestPinWithInvalidOffset(Defs.CHIPS.getFirst(), Defs.CHIPS.getFirst().countLines()),
       new TestPinWithInvalidOffset(Defs.CHIPS.getFirst(), Defs.CHIPS.getFirst().countLines() + 10)
   );

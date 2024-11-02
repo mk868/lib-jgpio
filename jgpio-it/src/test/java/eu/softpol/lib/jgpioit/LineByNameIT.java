@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.FieldSource;
 
 class LineByNameIT {
 
-  static List<TestPin> PINS_WITH_NAMES = List.of(
+  static final List<TestPin> PINS_WITH_NAMES = List.of(
       Defs.PIN_WITH_NAME
   );
 

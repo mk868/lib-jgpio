@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.FieldSource;
 
 class LineSessionReadWriteIT {
 
-  static List<TwoPins> CONNECTED_PINS = List.of(
+  static final List<TwoPins> CONNECTED_PINS = List.of(
       Defs.CONNECTED_PINS
   );
 

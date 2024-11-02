@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.FieldSource;
 
 class LineByOffsetIT {
 
-  static List<TestPin> PINS = List.of(
+  static final List<TestPin> PINS = List.of(
       Defs.PIN_WITH_NAME,
       Defs.PIN_WITHOUT_NAME,
       new TestPin(Defs.CHIPS.getFirst(), Defs.CHIPS.getFirst().countLines() - 1, null)

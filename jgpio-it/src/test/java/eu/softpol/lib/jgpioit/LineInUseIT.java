@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.FieldSource;
 
 class LineInUseIT {
 
-  static List<TestPin> PINS = List.of(Defs.UNCONNECTED_PIN);
+  static final List<TestPin> PINS = List.of(Defs.UNCONNECTED_PIN);
 
   @ParameterizedTest
   @FieldSource("PINS")

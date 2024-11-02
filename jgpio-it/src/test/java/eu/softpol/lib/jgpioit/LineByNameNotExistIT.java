@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.FieldSource;
 class LineByNameNotExistIT {
 
 
-  static List<TestPinWithInvalidName> NON_EXISTING_PINS = List.of(
+  static final List<TestPinWithInvalidName> NON_EXISTING_PINS = List.of(
       new TestPinWithInvalidName(Defs.CHIPS.getFirst(), "invalid"),
       new TestPinWithInvalidName(Defs.CHIPS.getFirst(), "abc"),
       new TestPinWithInvalidName(Defs.PIN_WITH_NAME.chip(),

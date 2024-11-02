@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.FieldSource;
 
 class LineConsumerIT {
 
-  static List<TestPin> PINS = List.of(
+  static final List<TestPin> PINS = List.of(
       Defs.UNCONNECTED_PIN
   );
 

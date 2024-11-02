@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.FieldSource;
 
 class JgpioOpenChipIT {
 
-  static List<TestChip> CHIPS = Defs.CHIPS;
+  static final List<TestChip> CHIPS = Defs.CHIPS;
 
   @ParameterizedTest
   @FieldSource("CHIPS")

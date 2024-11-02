@@ -12,10 +12,10 @@ import org.junit.jupiter.params.provider.FieldSource;
 
 class LineSessionBiasChangeIT {
 
-  static List<TestPin> PINS = List.of(
+  static final List<TestPin> PINS = List.of(
       Defs.UNCONNECTED_PIN
   );
-  static List<TwoPins> COUPLED_LINES = List.of(
+  static final List<TwoPins> COUPLED_LINES = List.of(
       Defs.CONNECTED_PINS
   );
 
