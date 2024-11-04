@@ -34,14 +34,41 @@ jobs:
 
     - name: Check sources with Maven
       run: |
-        mvn -B --file jgpio/pom.xml license:check
+        mvn -B -f jgpio/pom.xml license:check
       # TODO check formatting
 
     - name: Build with Maven
       run: |
         ./prepare.sh
-        mvn -B install --file jgpio/pom.xml -Djextract.bin=../jextract/bin/jextract
+        mvn -B -f jgpio/pom.xml install -Djextract.bin=../jextract/bin/jextract
 
     - name: Build IT with Maven
-      run: mvn -B package --file jgpio-it/pom.xml
-      # TODO run IT on remote Orange Pi One Plus
+      run: mvn -B -f jgpio-it/pom.xml package
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: jgpio-target
+        path: jgpio/target
+
+  test-it:
+    needs: build
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 23
+      uses: actions/setup-java@v4
+      with:
+        java-version: '23'
+        distribution: 'temurin'
+        cache: maven
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: jgpio-target
+        path: jgpio/target
+
+    - name: Test IT
+      run: |
+        mvn -B -f jgpio/pom.xml jar:jar install:install
+        mvn -B -f jgpio-it/pom.xml verify
