@@ -41,9 +41,8 @@ jobs:
       run: |
         ./prepare.sh
         mvn -B -f jgpio/pom.xml install -Djextract.bin=../jextract/bin/jextract
-
-    - name: Build IT with Maven
-      run: mvn -B -f jgpio-it/pom.xml package
+        mvn -B -f jgpio-it/pom.xml package
+        mvn -B -f examples/pom.xml package
 
     - uses: actions/upload-artifact@v4
       with:
