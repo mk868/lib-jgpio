@@ -6,25 +6,10 @@
 version: 2
 updates:
   - package-ecosystem: "maven"
-    directory: "/jgpio"
-    schedule:
-      interval: "weekly"
-    groups:
-      dev-deps:
-        dependency-type: "development"
-      prod-deps:
-        dependency-type: "production"
-  - package-ecosystem: "maven"
-    directory: "/jgpio-it"
-    schedule:
-      interval: "weekly"
-    groups:
-      dev-deps:
-        dependency-type: "development"
-      prod-deps:
-        dependency-type: "production"
-  - package-ecosystem: "maven"
-    directory: "/examples"
+    directories:
+     - "/jgpio"
+     - "/jgpio-it"
+     - "/examples"
     schedule:
       interval: "weekly"
     groups:
