@@ -2,9 +2,10 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
   pull_request:
     branches: [ "main" ]
+  workflow_call:
 
 jobs:
   build:
@@ -32,15 +33,15 @@ jobs:
 
       - name: Check sources with Maven
         run: |
-          mvn -B -f jgpio/pom.xml license:check
+          mvn -B -ntp -f jgpio/pom.xml license:check
         # TODO check formatting
 
       - name: Build with Maven
         run: |
           ./prepare.sh
-          mvn -B -f jgpio/pom.xml install -Djextract.bin=../jextract/bin/jextract
-          mvn -B -f jgpio-it/pom.xml package
-          mvn -B -f examples/pom.xml package
+          mvn -B -ntp -f jgpio/pom.xml install -Djextract.bin=../jextract/bin/jextract
+          mvn -B -ntp -f jgpio-it/pom.xml package
+          mvn -B -ntp -f examples/pom.xml package
 
       - uses: actions/upload-artifact@v4
         with:
@@ -67,5 +68,5 @@ jobs:
 
       - name: Test IT
         run: |
-          mvn -B -f jgpio/pom.xml jar:jar install:install
-          mvn -B -f jgpio-it/pom.xml verify
+          mvn -B -ntp -f jgpio/pom.xml jar:jar install:install
+          mvn -B -ntp -f jgpio-it/pom.xml verify
