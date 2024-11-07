@@ -14,8 +14,17 @@ The API allows you to:
 
 - List information about available chips and lines
 - Read GPIO pin values
-    - Option to set bias: high impedance, pull-up, pull-down
+    - Option to set bias:
+      - high impedance,
+      - pull-up,
+      - pull-down
 - Writing GPIO pin values
+    - Option to set drive mode:
+      - push-pull,
+      - open-drain,
+      - open-drain + pull-up,
+      - open-source,
+      - open-source + pull-down
 
 ## Usage
 
@@ -69,7 +78,7 @@ To grant native access for the JGPIO library, use the following parameter with t
 
 [More info](https://openjdk.org/jeps/472#Enabling-native-access)
 
-## System Preparation
+## System preparation
 
 ### Install libgpiod
 
