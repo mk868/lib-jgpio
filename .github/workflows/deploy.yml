@@ -29,16 +29,11 @@ jobs:
                 "password": "${{ secrets.CENTRAL_TOKEN }}"
             }]
 
-      - name: Cache jextract
-        id: cache-jextract
-        uses: actions/cache@v4
+      - uses: sdkman/sdkman-action@main
+        id: sdkman
         with:
-          path: jextract
-          key: 22-jextract+5-33
-
-      - name: Set up jextract
-        if: steps.cache-jextract.outputs.cache-hit != 'true'
-        run: ./prepare-jextract.sh
+          candidate: jextract
+          version: 22.ea.6
 
       - name: Deploy with Maven
         env:
