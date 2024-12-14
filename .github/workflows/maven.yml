@@ -20,16 +20,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Cache jextract
-        id: cache-jextract
-        uses: actions/cache@v4
+      - uses: sdkman/sdkman-action@main
+        id: sdkman
         with:
-          path: jextract
-          key: 22-jextract+5-33
-
-      - name: Set up jextract
-        if: steps.cache-jextract.outputs.cache-hit != 'true'
-        run: ./prepare-jextract.sh
+          candidate: jextract
+          version: 22.ea.6
 
       - name: Check sources with Maven
         run: |
@@ -39,14 +34,9 @@ jobs:
       - name: Build with Maven
         run: |
           ./prepare.sh
-          mvn -B -ntp -f jgpio/pom.xml install -Djextract.bin=../jextract/bin/jextract
+          mvn -B -ntp -f jgpio/pom.xml install
           mvn -B -ntp -f jgpio-it/pom.xml package
           mvn -B -ntp -f examples/pom.xml package
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: jgpio-target
-          path: jgpio/target
 
   test-it:
     needs: build
@@ -61,12 +51,14 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - uses: actions/download-artifact@v4
+      - uses: sdkman/sdkman-action@main
+        id: sdkman
         with:
-          name: jgpio-target
-          path: jgpio/target
+          candidate: jextract
+          version: 22.ea.6
 
       - name: Test IT
         run: |
-          mvn -B -ntp -f jgpio/pom.xml jar:jar install:install
+          ./prepare.sh
+          mvn -B -ntp -f jgpio/pom.xml install
           mvn -B -ntp -f jgpio-it/pom.xml verify
