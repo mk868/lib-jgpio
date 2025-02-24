@@ -35,7 +35,7 @@
   <properties>
     <maven.compiler.release>22</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit-jupiter.version>5.11.4</junit-jupiter.version>
+    <junit-jupiter.version>5.12.0</junit-jupiter.version>
     <log4j.version>2.24.3</log4j.version>
     <generated.sources.directory>${project.build.directory}/generated-sources/ffm
     </generated.sources.directory>
@@ -172,7 +172,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
+        <version>3.14.0</version>
       </plugin>
       <plugin>
         <groupId>com.mycila</groupId>
