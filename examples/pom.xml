@@ -12,7 +12,7 @@
     <maven.compiler.release>22</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jgpio.version>1.1.0</jgpio.version>
-    <log4j.version>2.24.3</log4j.version>
+    <log4j.version>2.25.0</log4j.version>
   </properties>
 
   <dependencyManagement>
