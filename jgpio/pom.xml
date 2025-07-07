@@ -35,7 +35,7 @@
   <properties>
     <maven.compiler.release>22</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit-jupiter.version>5.13.2</junit-jupiter.version>
+    <junit-jupiter.version>5.13.3</junit-jupiter.version>
     <log4j.version>2.25.0</log4j.version>
     <generated.sources.directory>${project.build.directory}/generated-sources/ffm
     </generated.sources.directory>
@@ -244,7 +244,7 @@ limitations under the License.
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.2.7</version>
+            <version>3.2.8</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
