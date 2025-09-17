@@ -164,7 +164,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <configuration>
           <argLine>--enable-native-access=eu.softpol.lib.jgpio -javaagent:${org.mockito:mockito-core:jar}</argLine>
         </configuration>
@@ -228,7 +228,7 @@ limitations under the License.
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.11.2</version>
+            <version>3.11.3</version>
             <configuration>
               <excludePackageNames>eu.softpol.lib.jgpio.internal.*</excludePackageNames>
             </configuration>
