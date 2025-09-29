@@ -12,7 +12,7 @@
     <maven.compiler.release>22</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jgpio.version>${project.version}</jgpio.version>
-    <log4j.version>2.25.1</log4j.version>
+    <log4j.version>2.25.2</log4j.version>
     <junit-jupiter.version>5.13.4</junit-jupiter.version>
   </properties>
 
@@ -75,12 +75,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.14.0</version>
+        <version>3.14.1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <configuration>
           <skipTests>true</skipTests>
         </configuration>
@@ -88,7 +88,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <configuration>
           <argLine>--enable-native-access=eu.softpol.lib.jgpio</argLine>
         </configuration>
