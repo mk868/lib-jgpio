@@ -13,10 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up JDK 24
+      - name: Set up JDK 25
         uses: actions/setup-java@v5
         with:
-          java-version: '24'
+          java-version: '25'
           distribution: 'temurin'
           cache: maven
 
@@ -28,15 +28,15 @@ jobs:
 
       - name: Check sources with Maven
         run: |
-          ./mvnw -B -ntp -f jgpio/pom.xml license:check
+          mvn -B -ntp -f jgpio/pom.xml license:check
         # TODO check formatting
 
       - name: Build with Maven
         run: |
           ./prepare.sh
-          ./mvnw -B -ntp -f jgpio/pom.xml install
-          ./mvnw -B -ntp -f jgpio-it/pom.xml package
-          ./mvnw -B -ntp -f examples/pom.xml package
+          mvn -B -ntp -f jgpio/pom.xml install
+          mvn -B -ntp -f jgpio-it/pom.xml package
+          mvn -B -ntp -f examples/pom.xml package
 
   test-it:
     needs: build
@@ -44,10 +44,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up JDK 24
+      - name: Set up JDK 25
         uses: actions/setup-java@v5
         with:
-          java-version: '24'
+          java-version: '25'
           distribution: 'temurin'
           cache: maven
 
