@@ -52,11 +52,6 @@ jobs:
           cache: maven
 
       - uses: sdkman/sdkman-action@main
-        id: sdkman-maven
-        with:
-          candidate: maven
-
-      - uses: sdkman/sdkman-action@main
         id: sdkman-jextract
         with:
           candidate: jextract
@@ -65,5 +60,5 @@ jobs:
       - name: Test IT
         run: |
           ./prepare.sh
-          mvn -B -ntp -f jgpio/pom.xml install
-          mvn -B -ntp -f jgpio-it/pom.xml verify
+          ./mvnw -B -ntp -f jgpio/pom.xml install
+          ./mvnw -B -ntp -f jgpio-it/pom.xml verify
