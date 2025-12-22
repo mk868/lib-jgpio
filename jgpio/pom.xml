@@ -36,7 +36,7 @@
     <maven.compiler.release>22</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit-jupiter.version>6.0.1</junit-jupiter.version>
-    <log4j.version>2.25.2</log4j.version>
+    <log4j.version>2.25.3</log4j.version>
     <generated.sources.directory>${project.build.directory}/generated-sources/ffm
     </generated.sources.directory>
     <jextract.bin>jextract</jextract.bin>
@@ -128,7 +128,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>3.6.2</version>
+        <version>3.6.3</version>
         <executions>
           <execution>
             <id>jextract-libgpiod</id>
@@ -214,7 +214,7 @@ limitations under the License.
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.3.1</version>
+            <version>3.4.0</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
