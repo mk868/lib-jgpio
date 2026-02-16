@@ -35,7 +35,7 @@
   <properties>
     <maven.compiler.release>22</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit-jupiter.version>6.0.2</junit-jupiter.version>
+    <junit-jupiter.version>6.0.3</junit-jupiter.version>
     <log4j.version>2.25.3</log4j.version>
     <generated.sources.directory>${project.build.directory}/generated-sources/ffm
     </generated.sources.directory>
