@@ -63,7 +63,7 @@ jobs:
         run: echo "version=$(mvn -f jgpio/pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_OUTPUT"
 
       - name: Create v${{steps.get_version.outputs.version}} tag
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             github.rest.git.createRef({
