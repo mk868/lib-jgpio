@@ -11,7 +11,7 @@ function git_checkout() {
   git clone --depth 1 --branch "$tag" -c advice.detachedHead=false "$url" "$dir_name"
 }
 
-git_checkout v1.6.3 https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git libgpiod
+git_checkout v1.6.5 https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git libgpiod
 
 
 echo "Done"
