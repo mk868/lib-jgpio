@@ -39,7 +39,6 @@ public class GpiodChip implements Chip {
 
   private boolean closed = false;
 
-  @SuppressWarnings("java:S117")
   private GpiodChip(MemorySegment chipPtr) {
     this.chipPtr = chipPtr;
   }

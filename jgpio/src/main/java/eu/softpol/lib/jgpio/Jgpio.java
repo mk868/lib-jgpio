@@ -62,7 +62,7 @@ public interface Jgpio {
   /// Retrieves the version of the libgpiod library.
   ///
   /// @return a string representing the version
-  public @Nullable String version();
+  @Nullable String version();
 
   /// Provides the default implementation of the {@link Jgpio} interface.
   ///
