@@ -30,13 +30,13 @@ public interface Line {
   /// Retrieves the name of the GPIO line.
   ///
   /// @return the name of the GPIO line, or null if the line has no name
-  public @Nullable String name();
+  @Nullable String name();
 
   /// Retrieves the consumer of the GPIO line.
   ///
   /// @return the name of the consumer using the line, or null if the line is not being used or if
   ///  the consumer is not defined
-  public @Nullable String consumer();
+  @Nullable String consumer();
 
   /// Retrieves the current direction of the GPIO line.
   ///
