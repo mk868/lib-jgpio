@@ -166,13 +166,38 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.5.5</version>
         <configuration>
-          <argLine>--enable-native-access=eu.softpol.lib.jgpio -javaagent:${org.mockito:mockito-core:jar}</argLine>
+          <argLine>--enable-native-access=eu.softpol.lib.jgpio
+            -javaagent:${org.mockito:mockito-core:jar}
+          </argLine>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.15.0</version>
+        <configuration>
+          <compilerArgs>
+            <arg>-XDcompilePolicy=simple</arg>
+            <arg>--should-stop=ifError=FLOW</arg>
+            <arg>-Xplugin:ErrorProne -Xep:NullAway:ERROR
+              -XepOpt:NullAway:AnnotatedPackages=eu.softpol.lib.jgpio
+              -XepOpt:NullAway:JSpecifyMode=true
+              -XepExcludedPaths:.*[\\/]target[\\/]generated-sources[\\/].*
+            </arg>
+          </compilerArgs>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>com.google.errorprone</groupId>
+              <artifactId>error_prone_core</artifactId>
+              <version>2.49.0</version>
+            </path>
+            <path>
+              <groupId>com.uber.nullaway</groupId>
+              <artifactId>nullaway</artifactId>
+              <version>0.13.4</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>com.mycila</groupId>
