@@ -15,7 +15,6 @@
  */
 package eu.softpol.lib.jgpio.internal.gpiod;
 
-import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.io.Closeable;
 import java.lang.System.Logger;
@@ -44,7 +43,7 @@ public abstract class GpiodLineSession implements Closeable {
   @Override
   public void close() {
     if (closed) {
-      throw new JgpioException("The line input session has already closed");
+      return;
     }
     closed = true;
     if (chip.isClosed()) {

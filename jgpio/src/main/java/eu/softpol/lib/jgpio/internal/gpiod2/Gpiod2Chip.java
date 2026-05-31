@@ -110,7 +110,6 @@ public class Gpiod2Chip implements Chip {
 
   @Override
   public void close() {
-    throwWhenChipClosed();
     if (closed) {
       return;
     }
