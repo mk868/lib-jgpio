@@ -134,11 +134,11 @@ public class GpiodChip implements Chip {
 
   @Override
   public void close() {
-    throwWhenChipClosed();
-    if (!closed) {
-      closed = true;
-      gpiod_h.gpiod_chip_close(chipPtr);
+    if (closed) {
+      return;
     }
+    closed = true;
+    gpiod_h.gpiod_chip_close(chipPtr);
   }
 
   @Override
@@ -147,9 +147,9 @@ public class GpiodChip implements Chip {
       return "GpiodChip(closed)";
     }
     return "GpiodChip{" +
-        "name='" + name() + '\'' +
-        ", label='" + label() + '\'' +
-        '}';
+           "name='" + name() + '\'' +
+           ", label='" + label() + '\'' +
+           '}';
   }
 
   @Override

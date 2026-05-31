@@ -135,7 +135,7 @@ public abstract class Gpiod2LineSession implements Closeable {
   @Override
   public void close() {
     if (closed) {
-      throw new JgpioException("The line input session has already closed");
+      return;
     }
     closed = true;
     logger.log(Level.DEBUG, "Line release");
