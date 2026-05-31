@@ -12,6 +12,7 @@ function git_checkout() {
 }
 
 git_checkout v1.6.5 https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git libgpiod
+git_checkout v2.2.4 https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git libgpiod2
 
 
 echo "Done"

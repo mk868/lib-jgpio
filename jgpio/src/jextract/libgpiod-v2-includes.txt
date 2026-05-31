@@ -1,0 +1,64 @@
+### common
+--include-function gpiod_api_version
+--include-function gpiod_is_gpiochip_device
+
+
+### chip
+--include-function gpiod_chip_open
+--include-function gpiod_chip_get_line_offset_from_name
+--include-function gpiod_chip_get_info
+--include-function gpiod_chip_get_line_info
+--include-function gpiod_chip_request_lines
+--include-function gpiod_chip_close
+
+
+### chip info
+--include-function gpiod_chip_info_free
+--include-function gpiod_chip_info_get_name
+--include-function gpiod_chip_info_get_label
+--include-function gpiod_chip_info_get_num_lines
+
+
+### line operations
+--include-function gpiod_line_info_get_consumer
+--include-function gpiod_line_info_get_direction
+--include-function gpiod_line_info_get_name
+--include-function gpiod_line_info_is_used
+--include-function gpiod_line_info_free
+
+
+### line request operations
+--include-function gpiod_line_request_release
+--include-function gpiod_line_request_get_value
+--include-function gpiod_line_request_reconfigure_lines
+--include-function gpiod_line_request_set_value
+
+--include-function gpiod_line_config_new
+--include-function gpiod_line_config_free
+--include-function gpiod_line_config_add_line_settings
+
+--include-function gpiod_request_config_new
+--include-function gpiod_request_config_free
+--include-function gpiod_request_config_set_consumer
+
+--include-function gpiod_line_settings_new
+--include-function gpiod_line_settings_free
+--include-function gpiod_line_settings_set_direction
+--include-function gpiod_line_settings_set_bias
+--include-function gpiod_line_settings_set_drive
+
+
+--include-constant GPIOD_LINE_DIRECTION_INPUT
+--include-constant GPIOD_LINE_DIRECTION_OUTPUT
+--include-constant GPIOD_LINE_VALUE_ACTIVE
+--include-constant GPIOD_LINE_VALUE_INACTIVE
+
+--include-constant GPIOD_LINE_BIAS_AS_IS
+--include-constant GPIOD_LINE_BIAS_UNKNOWN
+--include-constant GPIOD_LINE_BIAS_DISABLED
+--include-constant GPIOD_LINE_BIAS_PULL_UP
+--include-constant GPIOD_LINE_BIAS_PULL_DOWN
+
+--include-constant GPIOD_LINE_DRIVE_PUSH_PULL
+--include-constant GPIOD_LINE_DRIVE_OPEN_DRAIN
+--include-constant GPIOD_LINE_DRIVE_OPEN_SOURCE

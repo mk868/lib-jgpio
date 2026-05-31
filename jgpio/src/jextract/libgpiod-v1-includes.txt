@@ -2,7 +2,7 @@
 --include-function gpiod_version_string
 
 
-# chip open
+### chip open
 --include-function gpiod_chip_open
 --include-function gpiod_chip_open_by_name
 --include-function gpiod_chip_open_by_number

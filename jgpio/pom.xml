@@ -101,6 +101,12 @@
       <version>5.23.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit5</artifactId>
+      <version>1.4.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -142,8 +148,25 @@
                 --target-package ${jextract.package}.libgpiod
                 --output "${generated.sources.directory}"
                 --library "gpiod"
-                "@${project.basedir}/src/jextract/gpiod-includes.txt"
+                "@${project.basedir}/src/jextract/libgpiod-v1-includes.txt"
                 "${project.basedir}/../libgpiod/include/gpiod.h"
+              </commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>jextract-libgpiod2</id>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <executable>${jextract.bin}</executable>
+              <commandlineArgs>
+                --target-package ${jextract.package}.libgpiod2
+                --output "${generated.sources.directory}"
+                --library "gpiod"
+                "@${project.basedir}/src/jextract/libgpiod-v2-includes.txt"
+                "${project.basedir}/../libgpiod2/include/gpiod.h"
               </commandlineArgs>
             </configuration>
           </execution>
