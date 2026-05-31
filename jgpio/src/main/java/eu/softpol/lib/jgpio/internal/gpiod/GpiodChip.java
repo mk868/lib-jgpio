@@ -152,7 +152,8 @@ public class GpiodChip implements Chip {
         '}';
   }
 
-  boolean isClosed() {
+  @Override
+  public boolean isClosed() {
     return closed;
   }
 

@@ -74,6 +74,11 @@ public class GpiodLineInputSession extends GpiodLineSession implements LineInput
     return result == 1;
   }
 
+  @Override
+  public boolean isClosed() {
+    return super.isClosed();
+  }
+
   private int toFlags(Bias bias) {
     return switch (bias) {
       case HIGH_IMPEDANCE -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();

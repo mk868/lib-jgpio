@@ -33,6 +33,15 @@ public interface LineInputSession extends Closeable {
   /// @return the signal level: `true` if the input line is high, `false` if the input line is low
   boolean read();
 
+  /// Returns whether this input session is closed.
+  ///
+  /// A session is considered closed after [#close()] is called on it or when its owning [Chip] has
+  /// been closed. Once closed, methods like [#read()] and [#setBias(Bias)] are no longer valid and
+  /// may throw [IllegalStateException].
+  ///
+  /// @return `true` if this session is closed, otherwise `false`
+  boolean isClosed();
+
   /// Closes the line input session, releasing any associated resources.
   ///
   /// Once this method is called, further interactions with the session are not allowed and will

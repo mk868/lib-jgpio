@@ -73,6 +73,11 @@ public class GpiodLineOutputSession extends GpiodLineSession implements LineOutp
     }
   }
 
+  @Override
+  public boolean isClosed() {
+    return super.isClosed();
+  }
+
   private int toFlags(DriveMode driveMode) {
     return switch (driveMode) {
       case PUSH_PULL -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();

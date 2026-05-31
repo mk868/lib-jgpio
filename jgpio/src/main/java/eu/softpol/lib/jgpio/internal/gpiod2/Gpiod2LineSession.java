@@ -128,6 +128,10 @@ public abstract class Gpiod2LineSession implements Closeable {
     }
   }
 
+  protected boolean isClosed() {
+    return closed || chip.isClosed();
+  }
+
   @Override
   public void close() {
     if (closed) {

@@ -37,6 +37,10 @@ public abstract class GpiodLineSession implements Closeable {
     this.linePtr = linePtr;
   }
 
+  protected boolean isClosed() {
+    return closed || chip.isClosed();
+  }
+
   @Override
   public void close() {
     if (closed) {

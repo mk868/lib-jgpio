@@ -73,6 +73,14 @@ public interface Chip extends Closeable {
         .orElseThrow(() -> new JgpioException("Cannot find line with name '" + name + "'"));
   }
 
+  /// Returns whether this chip has been closed.
+  ///
+  /// A chip becomes closed after a successful call to [#close()]. Once closed, all methods except
+  /// [#isClosed()] are no longer valid and may throw [IllegalStateException].
+  ///
+  /// @return `true` if this chip is closed, otherwise `false`
+  boolean isClosed();
+
   /// Closes the GPIO controller chip, releasing any resources associated with it.
   ///
   /// This method must be called when the chip is no longer needed to ensure proper cleanup of
