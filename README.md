@@ -1,6 +1,6 @@
 # JGPIO
 
-The libgpiod bindings for Java using
+The libgpiod (v1 and v2) bindings for Java using
 the [Java 22 FFM API](https://docs.oracle.com/en/java/javase/22/core/foreign-function-and-memory-api.html).
 
 Key features:
@@ -9,32 +9,34 @@ Key features:
 * JPMS
 * System.Logger
 * JSpecify annotations
+* Automatic backend selection (`libgpiod v2` preferred, fallback to `v1`)
 
 The API allows you to:
 
 - List information about available chips and lines
 - Read GPIO pin values
     - Option to set bias:
-      - high impedance,
-      - pull-up,
-      - pull-down
+        - high impedance,
+        - pull-up,
+        - pull-down
 - Writing GPIO pin values
     - Option to set drive mode:
-      - push-pull,
-      - open-drain,
-      - open-drain + pull-up,
-      - open-source,
-      - open-source + pull-down
+        - push-pull,
+        - open-drain,
+        - open-drain + pull-up,
+        - open-source,
+        - open-source + pull-down
 
 ## Usage
 
 Add the library to your project:
 
 ```xml
+
 <dependency>
   <groupId>eu.soft-pol.lib.jgpio</groupId>
   <artifactId>jgpio</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
@@ -82,12 +84,14 @@ To grant native access for the JGPIO library, use the following parameter with t
 
 ### Install libgpiod
 
-Install the libgpiod library on the embedded device.
+Install the libgpiod runtime library and CLI tools on the embedded device.
 
-On Debian:
+On Debian/Ubuntu:
 
 ```shell
-apt install libgpiod
+apt install gpiod libgpiod2
+# or
+# apt install gpiod libgpiod
 ```
 
 ### GPIO permissions
@@ -156,6 +160,12 @@ To quickly get started, you can create a link to the `libgpiod.so` file in one o
 mkdir -p /usr/java/packages/lib
 # to show the library location use:
 #   ldconfig -p | grep libgpiod.so
+ln -s /lib/aarch64-linux-gnu/libgpiod.so.3 /usr/java/packages/lib/libgpiod.so
+```
+
+If your device provides only the legacy library, use `.so.2` instead:
+
+```shell
 ln -s /lib/aarch64-linux-gnu/libgpiod.so.2 /usr/java/packages/lib/libgpiod.so
 ```
 
