@@ -174,7 +174,8 @@ public class Gpiod2Chip implements Chip {
     return gpiod_h.gpiod_chip_request_lines(chipPtr, reqCfgPtr, lineCfgPtr);
   }
 
-  boolean isClosed() {
+  @Override
+  public boolean isClosed() {
     return closed;
   }
 

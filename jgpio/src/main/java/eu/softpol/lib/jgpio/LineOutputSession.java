@@ -31,8 +31,17 @@ public interface LineOutputSession extends Closeable {
   /// Writes the new value of the output line.
   ///
   /// @param value the signal level: `true` if the output line needs to be high, `false` if the
-  ///              output line needs to be low
+  /// output line needs to be low
   void write(boolean value);
+
+  /// Returns whether this output session is closed.
+  ///
+  /// A session is considered closed after [#close()] is called on it or when its owning [Chip] has
+  /// been closed. Once closed, methods like [#write(boolean)] and [#setDriveMode(DriveMode)] are no
+  /// longer valid and may throw [IllegalStateException].
+  ///
+  /// @return `true` if this session is closed, otherwise `false`
+  boolean isClosed();
 
   /// Closes the line output session, releasing any associated resources.
   ///

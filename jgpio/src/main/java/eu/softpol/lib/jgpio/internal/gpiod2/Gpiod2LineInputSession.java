@@ -54,4 +54,9 @@ public class Gpiod2LineInputSession extends Gpiod2LineSession implements LineInp
     }
     return result == gpiod_h.GPIOD_LINE_VALUE_ACTIVE();
   }
+
+  @Override
+  public boolean isClosed() {
+    return super.isClosed();
+  }
 }

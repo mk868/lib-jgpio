@@ -54,4 +54,9 @@ public class Gpiod2LineOutputSession extends Gpiod2LineSession implements LineOu
       throw new JgpioException("Cannot write value");
     }
   }
+
+  @Override
+  public boolean isClosed() {
+    return super.isClosed();
+  }
 }
