@@ -41,7 +41,7 @@ jobs:
           MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
         run: |
           ./prepare.sh
-          mvn -B -ntp -f jgpio/pom.xml -P release deploy -DskipTests -Dgpg.signer=bc -Djextract.bin=../jextract/bin/jextract
+          mvn -B -ntp -f jgpio/pom.xml -P release deploy -DskipTests -Dgpg.signer=bc
 
   create_tag:
     needs: deploy
