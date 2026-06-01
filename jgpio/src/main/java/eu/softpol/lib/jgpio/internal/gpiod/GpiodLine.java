@@ -15,14 +15,15 @@
  */
 package eu.softpol.lib.jgpio.internal.gpiod;
 
+import static eu.softpol.lib.jgpio.internal.ArgCheck.checkNonNull;
 import static eu.softpol.lib.jgpio.internal.FFMUtil.toNullableString;
 
-import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.Direction;
+import eu.softpol.lib.jgpio.InputMode;
 import eu.softpol.lib.jgpio.Line;
 import eu.softpol.lib.jgpio.LineInputSession;
 import eu.softpol.lib.jgpio.LineOutputSession;
-import eu.softpol.lib.jgpio.DriveMode;
+import eu.softpol.lib.jgpio.OutputMode;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.lang.foreign.MemorySegment;
 import org.jspecify.annotations.Nullable;
@@ -83,27 +84,17 @@ public class GpiodLine implements Line {
   }
 
   @Override
-  public LineInputSession openAsInput() {
+  public LineInputSession openAsInput(InputMode inputMode) {
     throwWhenChipClosed();
-    return new GpiodLineInputSession(chip, linePtr);
+    checkNonNull(inputMode, "inputMode");
+    return new GpiodLineInputSession(chip, linePtr, inputMode);
   }
 
   @Override
-  public LineInputSession openAsInput(Bias bias) {
+  public LineOutputSession openAsOutput(OutputMode outputMode) {
     throwWhenChipClosed();
-    return new GpiodLineInputSession(chip, linePtr, bias);
-  }
-
-  @Override
-  public LineOutputSession openAsOutput() {
-    throwWhenChipClosed();
-    return new GpiodLineOutputSession(chip, linePtr);
-  }
-
-  @Override
-  public LineOutputSession openAsOutput(DriveMode driveMode) {
-    throwWhenChipClosed();
-    return new GpiodLineOutputSession(chip, linePtr, driveMode);
+    checkNonNull(outputMode, "outputMode");
+    return new GpiodLineOutputSession(chip, linePtr, outputMode);
   }
 
   @Override
@@ -112,10 +103,10 @@ public class GpiodLine implements Line {
       return "GpiodLine(closed)";
     }
     return "GpiodLine{" +
-        "chip=" + chip +
-        ", offset=" + offset() +
-        ", name='" + name() + '\'' +
-        '}';
+           "chip=" + chip +
+           ", offset=" + offset() +
+           ", name='" + name() + '\'' +
+           '}';
   }
 
   private void throwWhenChipClosed() {

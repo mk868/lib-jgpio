@@ -35,7 +35,7 @@ public interface Line {
   /// Retrieves the consumer of the GPIO line.
   ///
   /// @return the name of the consumer using the line, or null if the line is not being used or if
-  ///  the consumer is not defined
+  /// the consumer is not defined
   @Nullable String consumer();
 
   /// Retrieves the current direction of the GPIO line.
@@ -51,23 +51,43 @@ public interface Line {
   /// Opens the GPIO line as an input.
   ///
   /// @return the session for the input line, which must be closed after use
-  LineInputSession openAsInput();
+  default LineInputSession openAsInput() {
+    return openAsInput(InputMode.builder().build());
+  }
 
   /// Opens the GPIO line as an input with the specified bias.
   ///
   /// @param bias the desired input line bias
   /// @return the session for the input line, which must be closed after use
-  LineInputSession openAsInput(Bias bias);
+  default LineInputSession openAsInput(Bias bias) {
+    return openAsInput(InputMode.builder().bias(bias).build());
+  }
+
+  /// Opens the GPIO line as an input with the specified input mode.
+  ///
+  /// @param inputMode the configuration to apply when requesting the line for input
+  /// @return the session for the input line, which must be closed after use
+  LineInputSession openAsInput(InputMode inputMode);
 
   /// Opens the GPIO line as an output.
   ///
   /// @return the session for the output line, which must be closed after use
-  LineOutputSession openAsOutput();
+  default LineOutputSession openAsOutput() {
+    return openAsOutput(OutputMode.builder().build());
+  }
 
   /// Opens the GPIO line as an output with the specified drive mode.
   ///
   /// @param driveMode the drive mode to be set for the GPIO line
   /// @return the session for the output line, which must be closed after use
-  LineOutputSession openAsOutput(DriveMode driveMode);
+  default LineOutputSession openAsOutput(DriveMode driveMode) {
+    return openAsOutput(OutputMode.builder().driveMode(driveMode).build());
+  }
+
+  /// Opens the GPIO line as an output with the specified output mode.
+  ///
+  /// @param outputMode the configuration to apply when requesting the line for output
+  /// @return the session for the output line, which must be closed after use
+  LineOutputSession openAsOutput(OutputMode outputMode);
 
 }

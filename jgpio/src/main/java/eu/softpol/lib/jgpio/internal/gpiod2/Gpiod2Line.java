@@ -15,14 +15,15 @@
  */
 package eu.softpol.lib.jgpio.internal.gpiod2;
 
+import static eu.softpol.lib.jgpio.internal.ArgCheck.checkNonNull;
 import static eu.softpol.lib.jgpio.internal.FFMUtil.toNullableString;
 
-import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.Direction;
-import eu.softpol.lib.jgpio.DriveMode;
+import eu.softpol.lib.jgpio.InputMode;
 import eu.softpol.lib.jgpio.Line;
 import eu.softpol.lib.jgpio.LineInputSession;
 import eu.softpol.lib.jgpio.LineOutputSession;
+import eu.softpol.lib.jgpio.OutputMode;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod2.gpiod_h;
 import org.jspecify.annotations.Nullable;
 
@@ -84,27 +85,17 @@ public class Gpiod2Line implements Line {
   }
 
   @Override
-  public LineInputSession openAsInput() {
+  public LineInputSession openAsInput(InputMode inputMode) {
     throwWhenChipClosed();
-    return new Gpiod2LineInputSession(chip, offset);
+    checkNonNull(inputMode, "inputMode");
+    return new Gpiod2LineInputSession(chip, offset, inputMode);
   }
 
   @Override
-  public LineInputSession openAsInput(Bias bias) {
+  public LineOutputSession openAsOutput(OutputMode outputMode) {
     throwWhenChipClosed();
-    return new Gpiod2LineInputSession(chip, offset, bias);
-  }
-
-  @Override
-  public LineOutputSession openAsOutput() {
-    throwWhenChipClosed();
-    return new Gpiod2LineOutputSession(chip, offset);
-  }
-
-  @Override
-  public LineOutputSession openAsOutput(DriveMode driveMode) {
-    throwWhenChipClosed();
-    return new Gpiod2LineOutputSession(chip, offset, driveMode);
+    checkNonNull(outputMode, "outputMode");
+    return new Gpiod2LineOutputSession(chip, offset, outputMode);
   }
 
   @Override

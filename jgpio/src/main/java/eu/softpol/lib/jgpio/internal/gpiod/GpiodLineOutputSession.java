@@ -18,34 +18,37 @@ package eu.softpol.lib.jgpio.internal.gpiod;
 import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineOutputSession;
+import eu.softpol.lib.jgpio.OutputMode;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class GpiodLineOutputSession extends GpiodLineSession implements LineOutputSession {
 
   private static final Logger logger = System.getLogger(GpiodLineOutputSession.class.getName());
 
-  public GpiodLineOutputSession(GpiodChip chip, MemorySegment linePtr) {
+  public GpiodLineOutputSession(GpiodChip chip, MemorySegment linePtr, OutputMode outputMode) {
     super(chip, linePtr);
-    try (var arena = Arena.ofConfined()) {
-      var consumerPtr = arena.allocateFrom(GpiodChip.CONSUMER_NAME, StandardCharsets.US_ASCII);
-      if (gpiod_h.gpiod_line_request_output(this.linePtr, consumerPtr, 0) != 0) {
-        throw new JgpioException("JGPIO line request failed");
-      }
-    }
-    logger.log(Level.DEBUG, "Line requested");
-  }
+    var consumer = Objects.requireNonNullElse(outputMode.consumer(), GpiodChip.CONSUMER_NAME);
+    var driveMode = outputMode.driveMode();
+    var initialVal = toValue(Boolean.TRUE.equals(outputMode.initialValue()));
 
-  public GpiodLineOutputSession(GpiodChip chip, MemorySegment linePtr, DriveMode driveMode) {
-    super(chip, linePtr);
-    int flags = toFlags(driveMode);
     try (var arena = Arena.ofConfined()) {
-      var consumerPtr = arena.allocateFrom(GpiodChip.CONSUMER_NAME, StandardCharsets.US_ASCII);
-      if (gpiod_h.gpiod_line_request_output_flags(this.linePtr, consumerPtr, flags, 0) != 0) {
+      var consumerPtr = arena.allocateFrom(consumer, StandardCharsets.US_ASCII);
+
+      int res;
+      if (driveMode == null) {
+        res = gpiod_h.gpiod_line_request_output(this.linePtr, consumerPtr, initialVal);
+      } else {
+        int flags = toFlags(driveMode);
+        res = gpiod_h.gpiod_line_request_output_flags(this.linePtr, consumerPtr, flags, initialVal);
+      }
+
+      if (res != 0) {
         throw new JgpioException("JGPIO line request failed");
       }
     }
@@ -68,7 +71,7 @@ public class GpiodLineOutputSession extends GpiodLineSession implements LineOutp
     throwWhenChipClosed();
     throwWhenLineSessionClosed();
     logger.log(Level.DEBUG, "Write {0}", value);
-    if (gpiod_h.gpiod_line_set_value(linePtr, value ? 1 : 0) != 0) {
+    if (gpiod_h.gpiod_line_set_value(linePtr, toValue(value)) != 0) {
       throw new JgpioException("Cannot write value");
     }
   }
@@ -82,13 +85,17 @@ public class GpiodLineOutputSession extends GpiodLineSession implements LineOutp
     return switch (driveMode) {
       case PUSH_PULL -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();
       case OPEN_DRAIN -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN()
-          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();
+                         + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();
       case OPEN_DRAIN_PULL_UP -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN()
-          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP();
+                                 + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP();
       case OPEN_SOURCE -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE()
-          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();
+                          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE();
       case OPEN_SOURCE_PULL_DOWN -> gpiod_h.GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE()
-          + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_DOWN();
+                                    + gpiod_h.GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_DOWN();
     };
+  }
+
+  private int toValue(boolean value) {
+    return value ? 1 : 0;
   }
 }

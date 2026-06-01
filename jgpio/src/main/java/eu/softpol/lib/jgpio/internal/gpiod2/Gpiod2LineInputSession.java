@@ -17,23 +17,25 @@ package eu.softpol.lib.jgpio.internal.gpiod2;
 
 import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.Direction;
+import eu.softpol.lib.jgpio.InputMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineInputSession;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod2.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.util.Objects;
 
 public class Gpiod2LineInputSession extends Gpiod2LineSession implements LineInputSession {
 
   private static final Logger logger = System.getLogger(Gpiod2LineInputSession.class.getName());
 
-  public Gpiod2LineInputSession(Gpiod2Chip chip, int offset) {
-    super(chip, offset, new Settings(Direction.INPUT, null, null));
-    logger.log(Level.DEBUG, "Line requested");
-  }
-
-  public Gpiod2LineInputSession(Gpiod2Chip chip, int offset, Bias bias) {
-    super(chip, offset, new Settings(Direction.INPUT, bias, null));
+  public Gpiod2LineInputSession(Gpiod2Chip chip, int offset, InputMode inputMode) {
+    super(
+        chip,
+        offset,
+        Objects.requireNonNullElse(inputMode.consumer(), Gpiod2Chip.CONSUMER_NAME),
+        new Settings(Direction.INPUT, inputMode.bias(), null, null)
+    );
     logger.log(Level.DEBUG, "Line requested");
   }
 
@@ -41,7 +43,7 @@ public class Gpiod2LineInputSession extends Gpiod2LineSession implements LineInp
   public void setBias(Bias bias) {
     throwWhenChipClosed();
     throwWhenLineSessionClosed();
-    reconfigureRequest(new Settings(Direction.INPUT, bias, null));
+    reconfigureRequest(new Settings(Direction.INPUT, bias, null, null));
   }
 
   @Override

@@ -46,6 +46,7 @@
 --include-function gpiod_line_settings_set_direction
 --include-function gpiod_line_settings_set_bias
 --include-function gpiod_line_settings_set_drive
+--include-function gpiod_line_settings_set_output_value
 
 
 --include-constant GPIOD_LINE_DIRECTION_INPUT
