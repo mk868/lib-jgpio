@@ -41,14 +41,19 @@ public abstract class Gpiod2LineSession implements Closeable {
 
   protected boolean closed = false;
 
-  protected Gpiod2LineSession(Gpiod2Chip chip, int offset, Settings settings) {
+  protected Gpiod2LineSession(Gpiod2Chip chip, int offset, String consumer, Settings settings) {
     this.chip = chip;
     this.offset = offset;
-    this.requestPtr = createRequest(chip, offset, settings);
+    this.requestPtr = createRequest(chip, offset, consumer, settings);
     chip.registerSession(this);
   }
 
-  private static MemorySegment createRequest(Gpiod2Chip chip, int offset, Settings settings) {
+  private static MemorySegment createRequest(
+      Gpiod2Chip chip,
+      int offset,
+      String consumer,
+      Settings settings
+  ) {
     MemorySegment reqCfgPtr = null;
     MemorySegment settingsPtr = null;
     MemorySegment lineCfgPtr = null;
@@ -59,7 +64,7 @@ public abstract class Gpiod2LineSession implements Closeable {
         throw new JgpioException("JGPIO line request failed: cannot allocate request config");
       }
 
-      var consumerPtr = arena.allocateFrom(Gpiod2Chip.CONSUMER_NAME, StandardCharsets.US_ASCII);
+      var consumerPtr = arena.allocateFrom(consumer, StandardCharsets.US_ASCII);
       gpiod_h.gpiod_request_config_set_consumer(reqCfgPtr, consumerPtr);
 
       settingsPtr = gpiod_h.gpiod_line_settings_new();
@@ -125,6 +130,15 @@ public abstract class Gpiod2LineSession implements Closeable {
       };
       gpiod_h.gpiod_line_settings_set_drive(settingsPtr, intDrive);
       gpiod_h.gpiod_line_settings_set_bias(settingsPtr, intBias);
+    }
+    if (settings.direction == Direction.OUTPUT) {
+      var intValue = Boolean.TRUE.equals(settings.outputValue())
+          ? gpiod_h.GPIOD_LINE_VALUE_ACTIVE()
+          : gpiod_h.GPIOD_LINE_VALUE_INACTIVE();
+
+      if (gpiod_h.gpiod_line_settings_set_output_value(settingsPtr, intValue) < 0) {
+        throw new JgpioException("JGPIO line request failed: cannot set output value");
+      }
     }
   }
 
@@ -195,7 +209,8 @@ public abstract class Gpiod2LineSession implements Closeable {
   protected record Settings(
       Direction direction,
       @Nullable Bias bias,
-      @Nullable DriveMode driveMode
+      @Nullable DriveMode driveMode,
+      @Nullable Boolean outputValue
   ) {
 
   }

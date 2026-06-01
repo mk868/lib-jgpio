@@ -19,21 +19,26 @@ import eu.softpol.lib.jgpio.Direction;
 import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineOutputSession;
+import eu.softpol.lib.jgpio.OutputMode;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod2.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.util.Objects;
 
 public class Gpiod2LineOutputSession extends Gpiod2LineSession implements LineOutputSession {
 
   private static final Logger logger = System.getLogger(Gpiod2LineOutputSession.class.getName());
 
-  public Gpiod2LineOutputSession(Gpiod2Chip chip, int offset) {
-    super(chip, offset, new Settings(Direction.OUTPUT, null, null));
-    logger.log(Level.DEBUG, "Line requested");
-  }
+  private boolean value;
 
-  public Gpiod2LineOutputSession(Gpiod2Chip chip, int offset, DriveMode driveMode) {
-    super(chip, offset, new Settings(Direction.OUTPUT, null, driveMode));
+  public Gpiod2LineOutputSession(Gpiod2Chip chip, int offset, OutputMode outputMode) {
+    super(
+        chip,
+        offset,
+        Objects.requireNonNullElse(outputMode.consumer(), Gpiod2Chip.CONSUMER_NAME),
+        new Settings(Direction.OUTPUT, null, outputMode.driveMode(), outputMode.initialValue())
+    );
+    this.value = Boolean.TRUE.equals(outputMode.initialValue());
     logger.log(Level.DEBUG, "Line requested");
   }
 
@@ -41,7 +46,7 @@ public class Gpiod2LineOutputSession extends Gpiod2LineSession implements LineOu
   public void setDriveMode(DriveMode driveMode) {
     throwWhenChipClosed();
     throwWhenLineSessionClosed();
-    reconfigureRequest(new Settings(Direction.OUTPUT, null, driveMode));
+    reconfigureRequest(new Settings(Direction.OUTPUT, null, driveMode, value));
   }
 
   @Override
@@ -53,6 +58,7 @@ public class Gpiod2LineOutputSession extends Gpiod2LineSession implements LineOu
     if (gpiod_h.gpiod_line_request_set_value(requestPtr, offset, intValue) < 0) {
       throw new JgpioException("Cannot write value");
     }
+    this.value = value;
   }
 
   @Override

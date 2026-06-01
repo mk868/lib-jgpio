@@ -16,6 +16,7 @@
 package eu.softpol.lib.jgpio.internal.gpiod;
 
 import eu.softpol.lib.jgpio.Bias;
+import eu.softpol.lib.jgpio.InputMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineInputSession;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
@@ -24,28 +25,28 @@ import java.lang.System.Logger.Level;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class GpiodLineInputSession extends GpiodLineSession implements LineInputSession {
 
   private static final Logger logger = System.getLogger(GpiodLineInputSession.class.getName());
 
-  public GpiodLineInputSession(GpiodChip chip, MemorySegment linePtr) {
+  public GpiodLineInputSession(GpiodChip chip, MemorySegment linePtr, InputMode inputMode) {
     super(chip, linePtr);
-    try (var arena = Arena.ofConfined()) {
-      var consumerPtr = arena.allocateFrom(GpiodChip.CONSUMER_NAME, StandardCharsets.US_ASCII);
-      if (gpiod_h.gpiod_line_request_input(linePtr, consumerPtr) != 0) {
-        throw new JgpioException("JGPIO line request failed");
-      }
-    }
-    logger.log(Level.DEBUG, "Line requested");
-  }
+    var consumer = Objects.requireNonNullElse(inputMode.consumer(), GpiodChip.CONSUMER_NAME);
+    var bias = inputMode.bias();
 
-  public GpiodLineInputSession(GpiodChip chip, MemorySegment linePtr, Bias bias) {
-    super(chip, linePtr);
-    int flags = toFlags(bias);
     try (var arena = Arena.ofConfined()) {
-      var consumerPtr = arena.allocateFrom(GpiodChip.CONSUMER_NAME, StandardCharsets.US_ASCII);
-      if (gpiod_h.gpiod_line_request_input_flags(linePtr, consumerPtr, flags) != 0) {
+      var consumerPtr = arena.allocateFrom(consumer, StandardCharsets.US_ASCII);
+
+      int res;
+      if (bias == null) {
+        res = gpiod_h.gpiod_line_request_input(linePtr, consumerPtr);
+      } else {
+        int flags = toFlags(bias);
+        res = gpiod_h.gpiod_line_request_input_flags(linePtr, consumerPtr, flags);
+      }
+      if (res != 0) {
         throw new JgpioException("JGPIO line request failed");
       }
     }
