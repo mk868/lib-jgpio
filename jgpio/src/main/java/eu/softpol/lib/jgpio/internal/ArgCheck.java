@@ -30,7 +30,7 @@ public class ArgCheck {
 
   public static void checkNonNull(@Nullable Object obj, String argName) {
     if (obj == null) {
-      throw new IllegalArgumentException("Argument '%s' must not be null".formatted(argName));
+      throw new NullPointerException("Argument '%s' must not be null".formatted(argName));
     }
   }
 }

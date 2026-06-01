@@ -15,6 +15,8 @@
  */
 package eu.softpol.lib.jgpio.internal;
 
+import static eu.softpol.lib.jgpio.internal.ArgCheck.checkNonNull;
+
 import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.InputMode;
 import org.jspecify.annotations.Nullable;
@@ -47,7 +49,7 @@ public record InputModeImpl(
 
     @Override
     public Builder consumer(String consumer) {
-      ArgCheck.checkNonNull(consumer, "consumer");
+      checkNonNull(consumer, "consumer");
       this.consumer = consumer;
       return this;
     }
@@ -60,7 +62,7 @@ public record InputModeImpl(
 
     @Override
     public Builder bias(Bias bias) {
-      ArgCheck.checkNonNull(bias, "bias");
+      checkNonNull(bias, "bias");
       this.bias = bias;
       return this;
     }

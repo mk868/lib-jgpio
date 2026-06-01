@@ -15,6 +15,8 @@
  */
 package eu.softpol.lib.jgpio;
 
+import static eu.softpol.lib.jgpio.internal.ArgCheck.checkNonNull;
+
 import org.jspecify.annotations.Nullable;
 
 /// Interface representing a GPIO line.
@@ -60,6 +62,7 @@ public interface Line {
   /// @param bias the desired input line bias
   /// @return the session for the input line, which must be closed after use
   default LineInputSession openAsInput(Bias bias) {
+    checkNonNull(bias, "bias");
     return openAsInput(InputMode.builder().bias(bias).build());
   }
 
@@ -81,6 +84,7 @@ public interface Line {
   /// @param driveMode the drive mode to be set for the GPIO line
   /// @return the session for the output line, which must be closed after use
   default LineOutputSession openAsOutput(DriveMode driveMode) {
+    checkNonNull(driveMode, "driveMode");
     return openAsOutput(OutputMode.builder().driveMode(driveMode).build());
   }
 

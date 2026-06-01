@@ -86,8 +86,8 @@ public class Gpiod2Chip implements Chip {
 
   @Override
   public Optional<Line> findLine(int offset) {
-    throwWhenChipClosed();
     checkNonNegative(offset, "offset");
+    throwWhenChipClosed();
     if (offset >= countLines()) {
       return Optional.empty();
     }
@@ -96,8 +96,8 @@ public class Gpiod2Chip implements Chip {
 
   @Override
   public Optional<Line> findLine(String name) {
-    throwWhenChipClosed();
     checkNonNull(name, "name");
+    throwWhenChipClosed();
     try (var arena = Arena.ofConfined()) {
       var namePtr = arena.allocateFrom(name, StandardCharsets.US_ASCII);
       var offset = gpiod_h.gpiod_chip_get_line_offset_from_name(chipPtr, namePtr);

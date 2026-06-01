@@ -15,6 +15,8 @@
  */
 package eu.softpol.lib.jgpio.internal;
 
+import static eu.softpol.lib.jgpio.internal.ArgCheck.checkNonNull;
+
 import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.OutputMode;
 import org.jspecify.annotations.Nullable;
@@ -51,7 +53,7 @@ public record OutputModeImpl(
 
     @Override
     public Builder consumer(String consumer) {
-      ArgCheck.checkNonNull(consumer, "consumer");
+      checkNonNull(consumer, "consumer");
       this.consumer = consumer;
       return this;
     }
@@ -64,7 +66,7 @@ public record OutputModeImpl(
 
     @Override
     public Builder driveMode(DriveMode driveMode) {
-      ArgCheck.checkNonNull(driveMode, "driveMode");
+      checkNonNull(driveMode, "driveMode");
       this.driveMode = driveMode;
       return this;
     }
