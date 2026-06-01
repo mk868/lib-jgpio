@@ -86,15 +86,15 @@ public class Gpiod2Line implements Line {
 
   @Override
   public LineInputSession openAsInput(InputMode inputMode) {
-    throwWhenChipClosed();
     checkNonNull(inputMode, "inputMode");
+    throwWhenChipClosed();
     return new Gpiod2LineInputSession(chip, offset, inputMode);
   }
 
   @Override
   public LineOutputSession openAsOutput(OutputMode outputMode) {
-    throwWhenChipClosed();
     checkNonNull(outputMode, "outputMode");
+    throwWhenChipClosed();
     return new Gpiod2LineOutputSession(chip, offset, outputMode);
   }
 

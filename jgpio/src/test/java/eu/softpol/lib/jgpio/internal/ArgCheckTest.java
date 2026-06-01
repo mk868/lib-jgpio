@@ -55,7 +55,7 @@ class ArgCheckTest {
 
     // WHEN-THEN
     assertThatThrownBy(() -> ArgCheck.checkNonNull(value, argName))
-        .isInstanceOf(IllegalArgumentException.class)
+        .isInstanceOf(NullPointerException.class)
         .hasMessageContaining(argName);
   }
 
