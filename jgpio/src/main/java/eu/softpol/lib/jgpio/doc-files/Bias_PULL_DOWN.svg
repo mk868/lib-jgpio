@@ -1,0 +1,34 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="480" height="260" viewBox="0 0 480 260">
+<rect width="480" height="260" fill="white"/>
+<!-- GPIO Pin box -->
+<rect x="40" y="114" width="16" height="16" fill="white" stroke="#111" stroke-width="1.5"/>
+<text x="48" y="143" text-anchor="middle" font-family="monospace" font-size="10" fill="#333">GPIO</text>
+<text x="48" y="154" text-anchor="middle" font-family="monospace" font-size="10" fill="#333">Pin</text>
+<!-- wire from GPIO Pin to node -->
+<line x1="56" y1="122" x2="240" y2="122" stroke="#111" stroke-width="1.5"/>
+<!-- internal node -->
+<circle cx="240" cy="122" r="3.5" fill="#111"/>
+<!-- wire node to buffer -->
+<line x1="240" y1="122" x2="256" y2="122" stroke="#111" stroke-width="1.5"/>
+<!-- input buffer triangle -->
+<polygon points="256,101 256,143 308,122" fill="#f0f0f0" stroke="#111" stroke-width="1.5"/>
+<text x="276" y="126" text-anchor="middle" font-family="monospace" font-size="9" fill="#555">BUF</text>
+<!-- wire after buffer -->
+<line x1="308" y1="122" x2="386" y2="122" stroke="#111" stroke-width="1.5"/>
+<text x="391" y="126" font-family="monospace" font-size="11" fill="#111">To Logic</text>
+<!-- wire node down to pull-down resistor -->
+<line x1="240" y1="122" x2="240" y2="140" stroke="#111" stroke-width="1.5"/>
+<!-- pull-down resistor (zigzag) -->
+<path d="M 240,140 L 240,148 L 232,153 L 248,161 L 232,169 L 248,177 L 240,182 L 240,190" fill="none" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="255" y="168" font-family="monospace" font-size="10" fill="#333">R</text>
+<text x="255" y="180" font-family="monospace" font-size="8" fill="#888">(internal)</text>
+<!-- wire to GND -->
+<line x1="240" y1="190" x2="240" y2="210" stroke="#111" stroke-width="1.5"/>
+<!-- GND symbol -->
+<line x1="218" y1="210" x2="262" y2="210" stroke="#111" stroke-width="2"/>
+<line x1="225" y1="216" x2="255" y2="216" stroke="#111" stroke-width="2"/>
+<line x1="232" y1="222" x2="248" y2="222" stroke="#111" stroke-width="2"/>
+<text x="240" y="237" text-anchor="middle" font-family="monospace" font-size="11" fill="#111">GND</text>
+<!-- description -->
+<text x="240" y="252" text-anchor="middle" font-family="monospace" font-size="9" fill="#555">Internal resistor pulls pin LOW; external HIGH signal can override</text>
+</svg>

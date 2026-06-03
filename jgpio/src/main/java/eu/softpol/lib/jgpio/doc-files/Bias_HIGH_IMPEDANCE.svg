@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="480" height="260" viewBox="0 0 480 260">
+<rect width="480" height="260" fill="white"/>
+<!-- GPIO Pin box -->
+<rect x="40" y="114" width="16" height="16" fill="white" stroke="#111" stroke-width="1.5"/>
+<text x="48" y="143" text-anchor="middle" font-family="monospace" font-size="10" fill="#333">GPIO</text>
+<text x="48" y="154" text-anchor="middle" font-family="monospace" font-size="10" fill="#333">Pin</text>
+<!-- wire from pin to buffer -->
+<line x1="56" y1="122" x2="240" y2="122" stroke="#111" stroke-width="1.5"/>
+<!-- input buffer triangle -->
+<polygon points="240,101 240,143 292,122" fill="#f0f0f0" stroke="#111" stroke-width="1.5"/>
+<text x="260" y="126" text-anchor="middle" font-family="monospace" font-size="9" fill="#555">BUF</text>
+<!-- wire after buffer -->
+<line x1="292" y1="122" x2="370" y2="122" stroke="#111" stroke-width="1.5"/>
+<text x="375" y="126" font-family="monospace" font-size="11" fill="#111">To Logic</text>
+<!-- description -->
+<text x="240" y="252" text-anchor="middle" font-family="monospace" font-size="9" fill="#555">Input floats without external bias - logic level undefined if pin undriven</text>
+</svg>
