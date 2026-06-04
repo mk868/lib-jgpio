@@ -28,7 +28,7 @@ public class Gpiod2 {
       gpiod_h.gpiod_api_version();
       return true;
     } catch (LinkageError | RuntimeException error) {
-      logger.log(Level.DEBUG, "libgpiod2 not available", error);
+      logger.log(Level.DEBUG, "libgpiod2 not available");
     }
     return false;
   }
