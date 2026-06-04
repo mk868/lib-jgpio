@@ -3,8 +3,8 @@ package eu.softpol.lib.jgpioit;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import eu.softpol.lib.jgpio.Jgpio;
-import eu.softpol.lib.jgpioit.annotation.AnyLibgpiodIT;
-import eu.softpol.lib.jgpioit.util.TestChip;
+import eu.softpol.lib.jgpioit.support.TestChip;
+import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
 import org.junit.jupiter.api.Test;
 
 @AnyLibgpiodIT

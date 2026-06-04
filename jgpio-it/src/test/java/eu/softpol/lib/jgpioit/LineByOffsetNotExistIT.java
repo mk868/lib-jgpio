@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import eu.softpol.lib.jgpio.Jgpio;
-import eu.softpol.lib.jgpioit.annotation.AnyLibgpiodIT;
-import eu.softpol.lib.jgpioit.util.TestChip;
+import eu.softpol.lib.jgpioit.support.TestChip;
+import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
 import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.FieldSource;
