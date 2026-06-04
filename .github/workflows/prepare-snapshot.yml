@@ -27,8 +27,9 @@ jobs:
         env:
           RELEASE_VERSION: ${{ github.event.inputs.version }}
         run: |
-          mvn -B -ntp -f jgpio/pom.xml versions:set -DnewVersion=$RELEASE_VERSION-SNAPSHOT -DgenerateBackupPoms=false
-          mvn -B -ntp -f jgpio-it/pom.xml versions:set -DnewVersion=$RELEASE_VERSION-SNAPSHOT -DgenerateBackupPoms=false
+          SNAPSHOT_VERSION="${RELEASE_VERSION}-SNAPSHOT"
+          mvn -B -ntp -f jgpio/pom.xml versions:set -DnewVersion=$SNAPSHOT_VERSION -DgenerateBackupPoms=false -DupdateBuildOutputTimestampPolicy=never
+          mvn -B -ntp -f jgpio-it/pom.xml versions:set -DnewVersion=$SNAPSHOT_VERSION -DgenerateBackupPoms=false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
