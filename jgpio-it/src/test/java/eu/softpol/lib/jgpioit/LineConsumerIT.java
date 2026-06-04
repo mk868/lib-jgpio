@@ -3,8 +3,8 @@ package eu.softpol.lib.jgpioit;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import eu.softpol.lib.jgpio.Jgpio;
-import eu.softpol.lib.jgpioit.annotation.AnyLibgpiodIT;
-import eu.softpol.lib.jgpioit.util.TestPin;
+import eu.softpol.lib.jgpioit.support.TestPin;
+import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
 import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.FieldSource;

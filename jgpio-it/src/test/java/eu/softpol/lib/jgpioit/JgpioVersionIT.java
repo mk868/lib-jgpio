@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import eu.softpol.lib.jgpio.Jgpio;
 import eu.softpol.lib.jgpio.JgpioException;
-import eu.softpol.lib.jgpioit.annotation.LibgpiodV1IT;
-import eu.softpol.lib.jgpioit.annotation.LibgpiodV2IT;
-import eu.softpol.lib.jgpioit.annotation.NoLibgpiodIT;
+import eu.softpol.lib.jgpioit.support.annotation.LibgpiodV1IT;
+import eu.softpol.lib.jgpioit.support.annotation.LibgpiodV2IT;
+import eu.softpol.lib.jgpioit.support.annotation.NoLibgpiodIT;
 import org.junit.jupiter.api.Test;
 
 public class JgpioVersionIT {

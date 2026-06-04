@@ -1,4 +1,4 @@
-package eu.softpol.lib.jgpioit.util;
+package eu.softpol.lib.jgpioit.support;
 
 import org.jspecify.annotations.Nullable;
 

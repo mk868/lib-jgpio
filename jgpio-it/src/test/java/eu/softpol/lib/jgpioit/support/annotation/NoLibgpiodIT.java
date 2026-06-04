@@ -1,4 +1,4 @@
-package eu.softpol.lib.jgpioit.annotation;
+package eu.softpol.lib.jgpioit.support.annotation;
 
 import eu.softpol.lib.jgpioit.ItTags;
 import java.lang.annotation.ElementType;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Tag;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Tag(ItTags.CONTAINER_IT)
-@Tag(ItTags.LIBGPIOD_V1)
-public @interface LibgpiodV1IT {
+@Tag(ItTags.NO_LIBGPIOD)
+public @interface NoLibgpiodIT {
 
 }

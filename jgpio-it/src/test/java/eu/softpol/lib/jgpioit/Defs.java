@@ -1,8 +1,8 @@
 package eu.softpol.lib.jgpioit;
 
-import eu.softpol.lib.jgpioit.util.TestChip;
-import eu.softpol.lib.jgpioit.util.TestPin;
-import eu.softpol.lib.jgpioit.util.TwoPins;
+import eu.softpol.lib.jgpioit.support.TestChip;
+import eu.softpol.lib.jgpioit.support.TestPin;
+import eu.softpol.lib.jgpioit.support.TwoPins;
 import java.util.List;
 
 // describes the test platform

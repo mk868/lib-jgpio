@@ -1,9 +1,9 @@
-package eu.softpol.lib.jgpioit;
+package eu.softpol.lib.jgpioit.arguments;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import eu.softpol.lib.jgpio.Jgpio;
-import eu.softpol.lib.jgpioit.annotation.AnyLibgpiodIT;
+import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
 import org.junit.jupiter.api.Test;
 
 @AnyLibgpiodIT
