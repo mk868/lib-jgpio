@@ -3,12 +3,14 @@ package eu.softpol.lib.jgpioit;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import eu.softpol.lib.jgpio.Jgpio;
+import eu.softpol.lib.jgpioit.annotation.AnyLibgpiodIT;
 import eu.softpol.lib.jgpioit.util.TestChip;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.FieldSource;
 
+@AnyLibgpiodIT
 class JgpioOpenChipIT {
 
   static final List<TestChip> CHIPS = Defs.CHIPS;

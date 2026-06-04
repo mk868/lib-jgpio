@@ -62,5 +62,6 @@ jobs:
       - name: Test IT
         run: |
           ./prepare.sh
-          ./mvnw -B -ntp -f jgpio/pom.xml install
-          ./mvnw -B -ntp -f jgpio-it/pom.xml verify
+          ./prepare-docker-images.sh
+          ./mvnw -B -ntp -f jgpio/pom.xml install -DskipTests
+          ./mvnw -B -ntp -f jgpio-it/pom.xml verify -Dgroups=container-launcher

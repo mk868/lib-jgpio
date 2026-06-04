@@ -4,11 +4,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import eu.softpol.lib.jgpio.Jgpio;
 import eu.softpol.lib.jgpio.JgpioException;
+import eu.softpol.lib.jgpioit.annotation.AnyLibgpiodIT;
 import eu.softpol.lib.jgpioit.util.TestPin;
 import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.FieldSource;
 
+@AnyLibgpiodIT
 class LineInUseIT {
 
   static final List<TestPin> PINS = List.of(Defs.UNCONNECTED_PIN);
