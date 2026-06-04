@@ -23,9 +23,15 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Set release timestamp
+        id: release_timestamp
+        run: |
+          echo "value=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
+
       - name: Set release version
         run: |
           mvn -B -ntp -f jgpio/pom.xml versions:set -DnewVersion=${{ github.event.inputs.version }} -DgenerateBackupPoms=false
+          mvn -B -ntp -f jgpio/pom.xml versions:set-property -Dproperty=project.build.outputTimestamp -DnewVersion="$RELEASE_TIMESTAMP" -DgenerateBackupPoms=false
           mvn -B -ntp -f jgpio-it/pom.xml versions:set -DnewVersion=${{ github.event.inputs.version }} -DgenerateBackupPoms=false
           mvn -B -ntp -f examples/pom.xml versions:set-property -Dproperty=jgpio.version -DnewVersion=${{ github.event.inputs.version }} -DgenerateBackupPoms=false
           sed -i '/<version>/s/>.*</>${{ github.event.inputs.version }}</' README.md

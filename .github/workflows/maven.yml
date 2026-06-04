@@ -2,7 +2,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "*" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_call:
@@ -36,6 +36,7 @@ jobs:
         run: |
           ./prepare.sh
           mvn -B -ntp -f jgpio/pom.xml install
+          mvn -B -ntp -f jgpio/pom.xml clean verify artifact:compare
           mvn -B -ntp -f jgpio-it/pom.xml package
           mvn -B -ntp -f examples/pom.xml package
 
