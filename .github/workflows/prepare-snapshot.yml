@@ -23,10 +23,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Set release version
+      - name: Set snapshot version
+        env:
+          RELEASE_VERSION: ${{ github.event.inputs.version }}
         run: |
-          mvn -B -ntp -f jgpio/pom.xml versions:set -DnewVersion=${{ github.event.inputs.version }}-SNAPSHOT -DgenerateBackupPoms=false
-          mvn -B -ntp -f jgpio-it/pom.xml versions:set -DnewVersion=${{ github.event.inputs.version }}-SNAPSHOT -DgenerateBackupPoms=false
+          mvn -B -ntp -f jgpio/pom.xml versions:set -DnewVersion=$RELEASE_VERSION-SNAPSHOT -DgenerateBackupPoms=false
+          mvn -B -ntp -f jgpio-it/pom.xml versions:set -DnewVersion=$RELEASE_VERSION-SNAPSHOT -DgenerateBackupPoms=false
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8

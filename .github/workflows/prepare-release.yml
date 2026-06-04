@@ -29,12 +29,15 @@ jobs:
           echo "value=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
 
       - name: Set release version
+        env:
+          RELEASE_VERSION: ${{ github.event.inputs.version }}
+          RELEASE_TIMESTAMP: ${{ steps.release_timestamp.outputs.value }}
         run: |
-          mvn -B -ntp -f jgpio/pom.xml versions:set -DnewVersion=${{ github.event.inputs.version }} -DgenerateBackupPoms=false
+          mvn -B -ntp -f jgpio/pom.xml versions:set -DnewVersion=$RELEASE_VERSION -DgenerateBackupPoms=false
           mvn -B -ntp -f jgpio/pom.xml versions:set-property -Dproperty=project.build.outputTimestamp -DnewVersion="$RELEASE_TIMESTAMP" -DgenerateBackupPoms=false
-          mvn -B -ntp -f jgpio-it/pom.xml versions:set -DnewVersion=${{ github.event.inputs.version }} -DgenerateBackupPoms=false
-          mvn -B -ntp -f examples/pom.xml versions:set-property -Dproperty=jgpio.version -DnewVersion=${{ github.event.inputs.version }} -DgenerateBackupPoms=false
-          sed -i '/<version>/s/>.*</>${{ github.event.inputs.version }}</' README.md
+          mvn -B -ntp -f jgpio-it/pom.xml versions:set -DnewVersion=$RELEASE_VERSION -DgenerateBackupPoms=false
+          mvn -B -ntp -f examples/pom.xml versions:set-property -Dproperty=jgpio.version -DnewVersion=$RELEASE_VERSION -DgenerateBackupPoms=false
+          sed -i "/<version>/s/>.*</>$RELEASE_VERSION</" README.md
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
