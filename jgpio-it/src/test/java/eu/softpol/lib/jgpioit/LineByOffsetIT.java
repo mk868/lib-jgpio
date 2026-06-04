@@ -26,8 +26,7 @@ class LineByOffsetIT {
     final var lineName = pin.lineName();
 
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(chipName);
-    ) {
+    try (var chip = jgpio.openChipByName(chipName)) {
       var line = chip.getLine(lineOffset);
 
       assertThat(line.offset())
@@ -45,8 +44,7 @@ class LineByOffsetIT {
     final var lineName = pin.lineName();
 
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(chipName);
-    ) {
+    try (var chip = jgpio.openChipByName(chipName)) {
       var lineOpt = chip.findLine(lineOffset);
       assertThat(lineOpt)
           .isPresent();

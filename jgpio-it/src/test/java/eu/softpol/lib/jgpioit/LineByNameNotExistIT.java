@@ -38,8 +38,7 @@ class LineByNameNotExistIT {
     final var lineName = pin.lineName();
 
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(chipName);
-    ) {
+    try (var chip = jgpio.openChipByName(chipName)) {
       var lineOpt = chip.findLine(lineName);
 
       assertThat(lineOpt)
@@ -54,8 +53,7 @@ class LineByNameNotExistIT {
     final var lineName = pin.lineName();
 
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(chipName);
-    ) {
+    try (var chip = jgpio.openChipByName(chipName)) {
       assertThatThrownBy(() -> chip.getLine(lineName))
           .hasMessageContaining("name")
           .hasMessageContaining(lineName);

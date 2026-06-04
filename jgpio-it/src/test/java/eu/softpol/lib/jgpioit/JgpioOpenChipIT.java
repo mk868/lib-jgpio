@@ -19,8 +19,7 @@ class JgpioOpenChipIT {
   @FieldSource("CHIPS")
   void should_open_chip_by_name(TestChip testChip) {
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(testChip.name());
-    ) {
+    try (var chip = jgpio.openChipByName(testChip.name())) {
       assertThat(chip.name())
           .isEqualTo(testChip.name());
       assertThat(chip.label())
@@ -34,8 +33,7 @@ class JgpioOpenChipIT {
   @FieldSource("CHIPS")
   void should_open_chip_by_label(TestChip testChip) {
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByLabel(testChip.label());
-    ) {
+    try (var chip = jgpio.openChipByLabel(testChip.label())) {
       assertThat(chip.name())
           .isEqualTo(testChip.name());
       assertThat(chip.label())
@@ -52,8 +50,7 @@ class JgpioOpenChipIT {
         .replaceAll("[^0-9]", ""));
 
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByNumber(number);
-    ) {
+    try (var chip = jgpio.openChipByNumber(number)) {
       assertThat(chip.name())
           .isEqualTo(testChip.name());
       assertThat(chip.label())
@@ -69,8 +66,7 @@ class JgpioOpenChipIT {
     var path = Path.of("/dev/", testChip.name());
 
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByPath(path);
-    ) {
+    try (var chip = jgpio.openChipByPath(path)) {
       assertThat(chip.name())
           .isEqualTo(testChip.name());
       assertThat(chip.label())

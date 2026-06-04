@@ -14,15 +14,15 @@ public class LineOutputSessionArgsIT {
     // GIVEN
     var jgpio = Jgpio.getInstance();
     var pin = Defs.PIN_WITH_NAME;
-    try (var chip = jgpio.openChipByName(pin.chip().name())) {
-      var line = chip.getLine(pin.lineOffset());
-      try (var session = line.openAsOutput()) {
+    try (var chip = jgpio.openChipByName(pin.chip().name());
+        var session = chip.getLine(pin.lineOffset())
+            .openAsOutput()
+    ) {
 
-        // WHEN-THEN
-        assertThatThrownBy(() -> session.setDriveMode(null))
-            .isInstanceOf(NullPointerException.class)
-            .hasMessageContaining("driveMode");
-      }
+      // WHEN-THEN
+      assertThatThrownBy(() -> session.setDriveMode(null))
+          .isInstanceOf(NullPointerException.class)
+          .hasMessageContaining("driveMode");
     }
   }
 }

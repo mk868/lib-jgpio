@@ -20,8 +20,7 @@ class LineConsumerIT {
   @FieldSource("PINS")
   void should_be_unused_by_default(TestPin pin) {
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(pin.chipName());
-    ) {
+    try (var chip = jgpio.openChipByName(pin.chipName())) {
       var line = chip.getLine(pin.lineOffset());
 
       assertSoftly(softly -> {
@@ -39,8 +38,7 @@ class LineConsumerIT {
   @FieldSource("PINS")
   void should_be_used_when_requested_for_write(TestPin pin) {
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(pin.chipName());
-    ) {
+    try (var chip = jgpio.openChipByName(pin.chipName())) {
       var line = chip.getLine(pin.lineOffset());
 
       try (var _ = line.openAsOutput()) {
@@ -60,8 +58,7 @@ class LineConsumerIT {
   @FieldSource("PINS")
   void should_be_used_when_requested_for_read(TestPin pin) {
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(pin.chipName());
-    ) {
+    try (var chip = jgpio.openChipByName(pin.chipName())) {
       var line = chip.getLine(pin.lineOffset());
 
       try (var _ = line.openAsInput()) {
@@ -81,8 +78,7 @@ class LineConsumerIT {
   @FieldSource("PINS")
   void should_not_be_used_after_read_release(TestPin pin) {
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(pin.chipName());
-    ) {
+    try (var chip = jgpio.openChipByName(pin.chipName())) {
       var line = chip.getLine(pin.lineOffset());
 
       try (var _ = line.openAsInput()) {
@@ -104,8 +100,7 @@ class LineConsumerIT {
   @FieldSource("PINS")
   void should_not_be_used_after_write_release(TestPin pin) {
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(pin.chipName());
-    ) {
+    try (var chip = jgpio.openChipByName(pin.chipName())) {
       var line = chip.getLine(pin.lineOffset());
 
       try (var _ = line.openAsOutput()) {
