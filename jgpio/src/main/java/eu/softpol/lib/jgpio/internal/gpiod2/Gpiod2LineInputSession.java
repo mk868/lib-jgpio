@@ -15,6 +15,8 @@
  */
 package eu.softpol.lib.jgpio.internal.gpiod2;
 
+import static eu.softpol.lib.jgpio.internal.ArgCheck.checkNonNull;
+
 import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.Direction;
 import eu.softpol.lib.jgpio.InputMode;
@@ -41,6 +43,7 @@ public class Gpiod2LineInputSession extends Gpiod2LineSession implements LineInp
 
   @Override
   public void setBias(Bias bias) {
+    checkNonNull(bias, "bias");
     throwWhenChipClosed();
     throwWhenLineSessionClosed();
     reconfigureRequest(new Settings(Direction.INPUT, bias, null, null));

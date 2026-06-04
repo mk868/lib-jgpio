@@ -15,6 +15,8 @@
  */
 package eu.softpol.lib.jgpio.internal.gpiod2;
 
+import static eu.softpol.lib.jgpio.internal.ArgCheck.checkNonNull;
+
 import eu.softpol.lib.jgpio.Direction;
 import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.JgpioException;
@@ -44,6 +46,7 @@ public class Gpiod2LineOutputSession extends Gpiod2LineSession implements LineOu
 
   @Override
   public void setDriveMode(DriveMode driveMode) {
+    checkNonNull(driveMode, "driveMode");
     throwWhenChipClosed();
     throwWhenLineSessionClosed();
     reconfigureRequest(new Settings(Direction.OUTPUT, null, driveMode, value));
