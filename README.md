@@ -1,5 +1,10 @@
 # JGPIO
 
+[![Maven Central](https://img.shields.io/maven-central/v/eu.soft-pol.lib.jgpio/jgpio.svg)](https://central.sonatype.com/artifact/eu.soft-pol.lib.jgpio/jgpio)
+[![Javadoc](https://javadoc.io/badge2/eu.soft-pol.lib.jgpio/jgpio/javadoc.svg)](https://javadoc.io/doc/eu.soft-pol.lib.jgpio/jgpio)
+[![Build](https://github.com/mk868/lib-jgpio/actions/workflows/maven.yml/badge.svg)](https://github.com/mk868/lib-jgpio/actions/workflows/maven.yml)
+[![License](https://img.shields.io/github/license/mk868/lib-jgpio)](https://github.com/mk868/lib-jgpio/blob/main/LICENSE)
+
 The libgpiod (v1 and v2) bindings for Java using
 the [Java 22 FFM API](https://docs.oracle.com/en/java/javase/22/core/foreign-function-and-memory-api.html).
 
