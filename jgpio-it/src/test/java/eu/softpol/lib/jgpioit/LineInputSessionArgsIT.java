@@ -14,15 +14,15 @@ public class LineInputSessionArgsIT {
     // GIVEN
     var jgpio = Jgpio.getInstance();
     var pin = Defs.PIN_WITH_NAME;
-    try (var chip = jgpio.openChipByName(pin.chip().name())) {
-      var line = chip.getLine(pin.lineOffset());
-      try (var session = line.openAsInput()) {
+    try (var chip = jgpio.openChipByName(pin.chip().name());
+        var session = chip.getLine(pin.lineOffset())
+            .openAsInput()
+    ) {
 
-        // WHEN-THEN
-        assertThatThrownBy(() -> session.setBias(null))
-            .isInstanceOf(NullPointerException.class)
-            .hasMessageContaining("bias");
-      }
+      // WHEN-THEN
+      assertThatThrownBy(() -> session.setBias(null))
+          .isInstanceOf(NullPointerException.class)
+          .hasMessageContaining("bias");
     }
   }
 }

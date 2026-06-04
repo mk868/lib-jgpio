@@ -35,8 +35,7 @@ class LineByOffsetNotExistIT {
     final var lineOffset = pin.lineOffset();
 
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(chipName);
-    ) {
+    try (var chip = jgpio.openChipByName(chipName)) {
       var lineOpt = chip.findLine(lineOffset);
 
       assertThat(lineOpt)
@@ -51,8 +50,7 @@ class LineByOffsetNotExistIT {
     final var lineOffset = pin.lineOffset();
 
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(chipName);
-    ) {
+    try (var chip = jgpio.openChipByName(chipName)) {
       assertThatThrownBy(() -> chip.getLine(lineOffset))
           .hasMessageContaining("offset")
           .hasMessageContaining("" + lineOffset);

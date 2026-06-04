@@ -21,8 +21,7 @@ class LineChangeDirectionIT {
   @FieldSource("PINS")
   void should_change_line_direction(TestPin pin) {
     var jgpio = Jgpio.getInstance();
-    try (var chip = jgpio.openChipByName(pin.chipName());
-    ) {
+    try (var chip = jgpio.openChipByName(pin.chipName())) {
       var line = chip.getLine(pin.lineOffset());
 
       try (var _ = line.openAsInput()) {

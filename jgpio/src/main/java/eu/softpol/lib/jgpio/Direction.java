@@ -26,5 +26,5 @@ public enum Direction {
   ///
   /// When a GPIO line is configured as OUTPUT, it is used to send electrical signals to external
   /// devices. This mode is typically used for LEDs, actuators, or other output devices.
-  OUTPUT;
+  OUTPUT
 }
