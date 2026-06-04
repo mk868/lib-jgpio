@@ -6,12 +6,13 @@ import static eu.softpol.lib.jgpio.DriveMode.OPEN_SOURCE;
 import static eu.softpol.lib.jgpio.DriveMode.OPEN_SOURCE_PULL_DOWN;
 import static eu.softpol.lib.jgpio.DriveMode.PUSH_PULL;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.params.ParameterizedTest.INDEX_PLACEHOLDER;
+import static org.junit.jupiter.params.ParameterizedInvocationConstants.INDEX_PLACEHOLDER;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
 import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.Jgpio;
+import eu.softpol.lib.jgpioit.annotation.AnyLibgpiodIT;
 import eu.softpol.lib.jgpioit.util.TestPin;
 import eu.softpol.lib.jgpioit.util.TwoPins;
 import java.util.Arrays;
@@ -21,6 +22,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+@AnyLibgpiodIT
 class LineSessionWriteDriveIT {
 
   private static final List<TwoPins> CONNECTED_PINS = List.of(
@@ -77,10 +79,10 @@ class LineSessionWriteDriveIT {
   }
 
   @ParameterizedTest(name = "[" + INDEX_PLACEHOLDER + "] "
-      + "driveMode={2}, "
-      + "bias={3}, "
-      + "writeValue={4}, "
-      + "readValue={5} ")
+                            + "driveMode={2}, "
+                            + "bias={3}, "
+                            + "writeValue={4}, "
+                            + "readValue={5} ")
   @MethodSource("args")
   void should_read_value_depending_on_bias_and_drive_mode_on_coupled_line(
       TestPin inputPin,
@@ -106,10 +108,10 @@ class LineSessionWriteDriveIT {
   }
 
   @ParameterizedTest(name = "[" + INDEX_PLACEHOLDER + "] "
-      + "driveMode={2}, "
-      + "bias={3}, "
-      + "writeValue={4}, "
-      + "readValue={5} ")
+                            + "driveMode={2}, "
+                            + "bias={3}, "
+                            + "writeValue={4}, "
+                            + "readValue={5} ")
   @MethodSource("args")
   void should_read_value_depending_on_bias_and_drive_mode_on_coupled_line2(
       TestPin inputPin,
