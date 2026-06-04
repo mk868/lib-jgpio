@@ -68,21 +68,23 @@ public class GpiodJgpio implements Jgpio {
     if (isNull(iter)) {
       throw new JgpioException("Cannot iterate over chips.");
     }
-
-    var result = new ArrayList<ChipInfo>();
-    for (
-        var chip = gpiod_h.gpiod_chip_iter_next(iter);
-        !isNull(chip);
-        chip = gpiod_h.gpiod_chip_iter_next(iter)
-    ) {
-      result.add(new GpiodChipInfo(
-          toNonNullString(gpiod_h.gpiod_chip_name(chip)),
-          toNonNullString(gpiod_h.gpiod_chip_label(chip)),
-          gpiod_h.gpiod_chip_num_lines(chip)
-      ));
+    try {
+      var result = new ArrayList<ChipInfo>();
+      for (
+          var chip = gpiod_h.gpiod_chip_iter_next(iter);
+          !isNull(chip);
+          chip = gpiod_h.gpiod_chip_iter_next(iter)
+      ) {
+        result.add(new GpiodChipInfo(
+            toNonNullString(gpiod_h.gpiod_chip_name(chip)),
+            toNonNullString(gpiod_h.gpiod_chip_label(chip)),
+            gpiod_h.gpiod_chip_num_lines(chip)
+        ));
+      }
+      return List.copyOf(result);
+    } finally {
+      gpiod_h.gpiod_chip_iter_free(iter);
     }
-    gpiod_h.gpiod_chip_iter_free(iter);
-    return List.copyOf(result);
   }
 
   @Override
