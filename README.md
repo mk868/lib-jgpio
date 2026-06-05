@@ -145,8 +145,7 @@ After restart, try to call the `gpioinfo` command to verify access.
 
 ### Loading libgpiod
 
-By default, JVM looks for libraries in directories defined in the `java.library.path` environment
-variable.  
+By default, JVM looks for libraries in directories defined in the `java.library.path` property.  
 You can list these directories using the following command:
 
 ```shell
