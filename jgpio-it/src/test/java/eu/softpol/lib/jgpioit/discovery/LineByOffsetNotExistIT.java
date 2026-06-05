@@ -1,9 +1,10 @@
-package eu.softpol.lib.jgpioit;
+package eu.softpol.lib.jgpioit.discovery;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import eu.softpol.lib.jgpio.Jgpio;
+import eu.softpol.lib.jgpioit.Defs;
 import eu.softpol.lib.jgpioit.support.TestChip;
 import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
 import java.util.List;
@@ -11,19 +12,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.FieldSource;
 
 @AnyLibgpiodIT
-class LineByNameNotExistIT {
+class LineByOffsetNotExistIT {
 
-
-  static final List<TestPinWithInvalidName> NON_EXISTING_PINS = List.of(
-      new TestPinWithInvalidName(Defs.CHIPS.getFirst(), "invalid"),
-      new TestPinWithInvalidName(Defs.CHIPS.getFirst(), "abc"),
-      new TestPinWithInvalidName(Defs.PIN_WITH_NAME.chip(),
-          Defs.PIN_WITH_NAME.lineName().toLowerCase())
+  static final List<TestPinWithInvalidOffset> NON_EXISTING_PINS = List.of(
+      new TestPinWithInvalidOffset(Defs.CHIPS.getFirst(), Defs.CHIPS.getFirst().countLines()),
+      new TestPinWithInvalidOffset(Defs.CHIPS.getFirst(), Defs.CHIPS.getFirst().countLines() + 10)
   );
 
-  public record TestPinWithInvalidName(
+  public record TestPinWithInvalidOffset(
       TestChip chip,
-      String lineName
+      int lineOffset
   ) {
 
     public String chipName() {
@@ -33,13 +31,13 @@ class LineByNameNotExistIT {
 
   @ParameterizedTest
   @FieldSource("NON_EXISTING_PINS")
-  void should_findLine_return_empty(TestPinWithInvalidName pin) {
+  void should_findLine_return_empty(TestPinWithInvalidOffset pin) {
     final var chipName = pin.chipName();
-    final var lineName = pin.lineName();
+    final var lineOffset = pin.lineOffset();
 
     var jgpio = Jgpio.getInstance();
     try (var chip = jgpio.openChipByName(chipName)) {
-      var lineOpt = chip.findLine(lineName);
+      var lineOpt = chip.findLine(lineOffset);
 
       assertThat(lineOpt)
           .isEmpty();
@@ -48,15 +46,15 @@ class LineByNameNotExistIT {
 
   @ParameterizedTest
   @FieldSource("NON_EXISTING_PINS")
-  void should_getLine_throw(TestPinWithInvalidName pin) {
+  void should_getLine_throw(TestPinWithInvalidOffset pin) {
     final var chipName = pin.chipName();
-    final var lineName = pin.lineName();
+    final var lineOffset = pin.lineOffset();
 
     var jgpio = Jgpio.getInstance();
     try (var chip = jgpio.openChipByName(chipName)) {
-      assertThatThrownBy(() -> chip.getLine(lineName))
-          .hasMessageContaining("name")
-          .hasMessageContaining(lineName);
+      assertThatThrownBy(() -> chip.getLine(lineOffset))
+          .hasMessageContaining("offset")
+          .hasMessageContaining("" + lineOffset);
     }
   }
 

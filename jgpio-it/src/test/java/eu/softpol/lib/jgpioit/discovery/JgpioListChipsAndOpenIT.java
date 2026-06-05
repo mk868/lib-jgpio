@@ -1,8 +1,9 @@
-package eu.softpol.lib.jgpioit;
+package eu.softpol.lib.jgpioit.discovery;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import eu.softpol.lib.jgpio.Jgpio;
+import eu.softpol.lib.jgpioit.Defs;
 import eu.softpol.lib.jgpioit.support.TestChip;
 import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
 import java.util.List;
