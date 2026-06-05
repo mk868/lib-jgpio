@@ -1,4 +1,4 @@
-package eu.softpol.lib.jgpioit;
+package eu.softpol.lib.jgpioit.discovery;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

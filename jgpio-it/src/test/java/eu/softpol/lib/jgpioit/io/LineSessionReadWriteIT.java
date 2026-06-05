@@ -1,8 +1,9 @@
-package eu.softpol.lib.jgpioit;
+package eu.softpol.lib.jgpioit.io;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import eu.softpol.lib.jgpio.Jgpio;
+import eu.softpol.lib.jgpioit.Defs;
 import eu.softpol.lib.jgpioit.support.TwoPins;
 import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
 import java.util.List;

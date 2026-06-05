@@ -1,9 +1,10 @@
-package eu.softpol.lib.jgpioit;
+package eu.softpol.lib.jgpioit.ownership;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import eu.softpol.lib.jgpio.Jgpio;
 import eu.softpol.lib.jgpio.JgpioException;
+import eu.softpol.lib.jgpioit.Defs;
 import eu.softpol.lib.jgpioit.support.TestPin;
 import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
 import java.util.List;

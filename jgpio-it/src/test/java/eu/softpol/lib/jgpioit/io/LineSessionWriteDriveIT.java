@@ -1,4 +1,4 @@
-package eu.softpol.lib.jgpioit;
+package eu.softpol.lib.jgpioit.io;
 
 import static eu.softpol.lib.jgpio.DriveMode.OPEN_DRAIN;
 import static eu.softpol.lib.jgpio.DriveMode.OPEN_DRAIN_PULL_UP;
@@ -12,6 +12,7 @@ import static org.junit.jupiter.params.provider.Arguments.of;
 import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.Jgpio;
+import eu.softpol.lib.jgpioit.Defs;
 import eu.softpol.lib.jgpioit.support.TestPin;
 import eu.softpol.lib.jgpioit.support.TwoPins;
 import eu.softpol.lib.jgpioit.support.annotation.AnyLibgpiodIT;
