@@ -21,9 +21,9 @@ import static eu.softpol.lib.jgpio.internal.FFMUtil.isNull;
 import static eu.softpol.lib.jgpio.internal.FFMUtil.toNonNullString;
 
 import eu.softpol.lib.jgpio.Chip;
-import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.Line;
 import eu.softpol.lib.jgpio.internal.CloseablePtr;
+import eu.softpol.lib.jgpio.internal.JgpioExceptions;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod2.gpiod_h;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
@@ -34,8 +34,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class Gpiod2Chip implements Chip {
-
-  protected static final String CONSUMER_NAME = "JGPIO";
 
   private final List<Gpiod2LineSession> activeSessions = new ArrayList<>();
   private final MemorySegment chipPtr;
@@ -53,14 +51,12 @@ public class Gpiod2Chip implements Chip {
       var pathPtr = arena.allocateFrom(path.toAbsolutePath().toString(), StandardCharsets.US_ASCII);
       var chipPtr = gpiod_h.gpiod_chip_open(pathPtr);
       if (isNull(chipPtr)) {
-        throw new JgpioException(
-            "Cannot open chip with path '%s', no resource or lack of permissions".formatted(path));
+        throw JgpioExceptions.chipOpenFailedByPath(path);
       }
       var chipInfoPtr = gpiod_h.gpiod_chip_get_info(chipPtr);
       if (isNull(chipInfoPtr)) {
         gpiod_h.gpiod_chip_close(chipPtr);
-        throw new JgpioException(
-            "Cannot open chip with path '%s', no resource or lack of permissions".formatted(path));
+        throw JgpioExceptions.chipOpenFailedByPath(path);
       }
       return new Gpiod2Chip(chipPtr, chipInfoPtr);
     }

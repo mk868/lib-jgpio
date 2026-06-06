@@ -19,6 +19,7 @@ import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineOutputSession;
 import eu.softpol.lib.jgpio.OutputMode;
+import eu.softpol.lib.jgpio.internal.JgpioDefaults;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
@@ -33,7 +34,7 @@ public class GpiodLineOutputSession extends GpiodLineSession implements LineOutp
 
   public GpiodLineOutputSession(GpiodChip chip, MemorySegment linePtr, OutputMode outputMode) {
     super(chip, linePtr);
-    var consumer = Objects.requireNonNullElse(outputMode.consumer(), GpiodChip.CONSUMER_NAME);
+    var consumer = Objects.requireNonNullElse(outputMode.consumer(), JgpioDefaults.CONSUMER_NAME);
     var driveMode = outputMode.driveMode();
     var initialVal = toValue(Boolean.TRUE.equals(outputMode.initialValue()));
 

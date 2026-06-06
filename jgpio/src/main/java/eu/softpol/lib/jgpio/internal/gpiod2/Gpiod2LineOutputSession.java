@@ -22,6 +22,7 @@ import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineOutputSession;
 import eu.softpol.lib.jgpio.OutputMode;
+import eu.softpol.lib.jgpio.internal.JgpioDefaults;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod2.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
@@ -37,7 +38,7 @@ public class Gpiod2LineOutputSession extends Gpiod2LineSession implements LineOu
     super(
         chip,
         offset,
-        Objects.requireNonNullElse(outputMode.consumer(), Gpiod2Chip.CONSUMER_NAME),
+        Objects.requireNonNullElse(outputMode.consumer(), JgpioDefaults.CONSUMER_NAME),
         new Settings(Direction.OUTPUT, null, outputMode.driveMode(), outputMode.initialValue())
     );
     this.value = Boolean.TRUE.equals(outputMode.initialValue());

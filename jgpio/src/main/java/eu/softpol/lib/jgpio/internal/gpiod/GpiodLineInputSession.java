@@ -19,6 +19,7 @@ import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.InputMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineInputSession;
+import eu.softpol.lib.jgpio.internal.JgpioDefaults;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
@@ -33,7 +34,7 @@ public class GpiodLineInputSession extends GpiodLineSession implements LineInput
 
   public GpiodLineInputSession(GpiodChip chip, MemorySegment linePtr, InputMode inputMode) {
     super(chip, linePtr);
-    var consumer = Objects.requireNonNullElse(inputMode.consumer(), GpiodChip.CONSUMER_NAME);
+    var consumer = Objects.requireNonNullElse(inputMode.consumer(), JgpioDefaults.CONSUMER_NAME);
     var bias = inputMode.bias();
 
     try (var arena = Arena.ofConfined()) {

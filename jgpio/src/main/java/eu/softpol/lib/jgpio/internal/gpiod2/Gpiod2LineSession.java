@@ -21,6 +21,7 @@ import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.Direction;
 import eu.softpol.lib.jgpio.DriveMode;
 import eu.softpol.lib.jgpio.JgpioException;
+import eu.softpol.lib.jgpio.internal.JgpioExceptions;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod2.gpiod_h;
 import java.io.Closeable;
 import java.lang.System.Logger;
@@ -159,13 +160,13 @@ public abstract class Gpiod2LineSession implements Closeable {
 
   protected void throwWhenLineSessionClosed() {
     if (closed) {
-      throw new IllegalStateException("Line Session has been closed");
+      throw JgpioExceptions.lineSessionClosed();
     }
   }
 
   protected void throwWhenChipClosed() {
     if (chip.isClosed()) {
-      throw new IllegalStateException("Chip for this line has been closed");
+      throw JgpioExceptions.chipClosed();
     }
   }
 
