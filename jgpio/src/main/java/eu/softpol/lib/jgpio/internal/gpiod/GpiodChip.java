@@ -21,8 +21,8 @@ import static eu.softpol.lib.jgpio.internal.FFMUtil.isNull;
 import static eu.softpol.lib.jgpio.internal.FFMUtil.toNonNullString;
 
 import eu.softpol.lib.jgpio.Chip;
-import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.Line;
+import eu.softpol.lib.jgpio.internal.JgpioExceptions;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod.gpiod_h;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
@@ -31,8 +31,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 public class GpiodChip implements Chip {
-
-  protected static final String CONSUMER_NAME = "JGPIO";
 
   /// struct gpiod_chip pointer
   private final MemorySegment chipPtr;
@@ -48,8 +46,7 @@ public class GpiodChip implements Chip {
       var namePtr = arena.allocateFrom(name, StandardCharsets.US_ASCII);
       var chipPtr = gpiod_h.gpiod_chip_open_by_name(namePtr);
       if (isNull(chipPtr)) {
-        throw new JgpioException(
-            "Cannot open chip with name '%s', no resource or lack of permissions".formatted(name));
+        throw JgpioExceptions.chipOpenFailedByName(name);
       }
       return new GpiodChip(chipPtr);
     }
@@ -58,8 +55,7 @@ public class GpiodChip implements Chip {
   public static GpiodChip openByNumber(int number) {
     var chipPtr = gpiod_h.gpiod_chip_open_by_number(number);
     if (isNull(chipPtr)) {
-      throw new JgpioException(
-          "Cannot open chip with number %d, no resource or lack of permissions".formatted(number));
+      throw JgpioExceptions.chipOpenFailedByNumber(number);
     }
     return new GpiodChip(chipPtr);
   }
@@ -69,9 +65,7 @@ public class GpiodChip implements Chip {
       var labelPtr = arena.allocateFrom(label, StandardCharsets.US_ASCII);
       var chipPtr = gpiod_h.gpiod_chip_open_by_label(labelPtr);
       if (isNull(chipPtr)) {
-        throw new JgpioException(
-            "Cannot open chip with label '%s', no resource or lack of permissions"
-                .formatted(label));
+        throw JgpioExceptions.chipOpenFailedByLabel(label);
       }
       return new GpiodChip(chipPtr);
     }
@@ -82,8 +76,7 @@ public class GpiodChip implements Chip {
       var pathPtr = arena.allocateFrom(path.toAbsolutePath().toString(), StandardCharsets.US_ASCII);
       var chipPtr = gpiod_h.gpiod_chip_open(pathPtr);
       if (isNull(chipPtr)) {
-        throw new JgpioException(
-            "Cannot open chip with path '%s', no resource or lack of permissions".formatted(path));
+        throw JgpioExceptions.chipOpenFailedByPath(path);
       }
       return new GpiodChip(chipPtr);
     }

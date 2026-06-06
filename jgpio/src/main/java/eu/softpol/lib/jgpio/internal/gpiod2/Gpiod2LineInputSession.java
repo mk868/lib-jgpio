@@ -22,6 +22,7 @@ import eu.softpol.lib.jgpio.Direction;
 import eu.softpol.lib.jgpio.InputMode;
 import eu.softpol.lib.jgpio.JgpioException;
 import eu.softpol.lib.jgpio.LineInputSession;
+import eu.softpol.lib.jgpio.internal.JgpioDefaults;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod2.gpiod_h;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
@@ -35,7 +36,7 @@ public class Gpiod2LineInputSession extends Gpiod2LineSession implements LineInp
     super(
         chip,
         offset,
-        Objects.requireNonNullElse(inputMode.consumer(), Gpiod2Chip.CONSUMER_NAME),
+        Objects.requireNonNullElse(inputMode.consumer(), JgpioDefaults.CONSUMER_NAME),
         new Settings(Direction.INPUT, inputMode.bias(), null, null)
     );
     logger.log(Level.DEBUG, "Line requested");
