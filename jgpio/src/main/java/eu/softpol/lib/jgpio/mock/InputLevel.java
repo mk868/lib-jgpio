@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import org.jspecify.annotations.NullMarked;
+package eu.softpol.lib.jgpio.mock;
 
-/// This module descriptor defines the module `eu.softpol.lib.jgpio`.
-@NullMarked
-module eu.softpol.lib.jgpio {
-  requires org.jspecify;
-
-  exports eu.softpol.lib.jgpio;
-  exports eu.softpol.lib.jgpio.mock;
+public enum InputLevel {
+  HIGH,
+  LOW,
+  HIGH_IMPEDANCE
 }
