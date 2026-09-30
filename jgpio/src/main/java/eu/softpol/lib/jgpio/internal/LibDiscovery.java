@@ -22,6 +22,7 @@ import eu.softpol.lib.jgpio.JgpioException;
 import java.io.File;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -45,8 +46,8 @@ public class LibDiscovery {
   public static void tryToInitLibrary(Class<?> clazz, String libName) {
     try {
       // triggering class initialization
-      Class.forName(clazz.getName());
-    } catch (ExceptionInInitializerError | ClassNotFoundException ex) {
+      MethodHandles.lookup().ensureInitialized(clazz);
+    } catch (ExceptionInInitializerError | IllegalAccessException ex) {
       var nativeLibName = System.mapLibraryName(libName);
       var libAnalysis = LibDiscovery.analyzeLibraryPath(nativeLibName);
 
