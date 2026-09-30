@@ -9,3 +9,6 @@ docker build -f docker/it-gpiod-2.x.Dockerfile -t lib-jgpio-it:gpiod-2.x .
 
 echo "=== Building lib-jgpio-it:no-gpiod ==="
 docker build -f docker/it-no-gpiod.Dockerfile -t lib-jgpio-it:no-gpiod .
+
+echo "=== Building lib-jgpio-it:native-builder ==="
+docker build -f docker/it-native-builder.Dockerfile -t lib-jgpio-it:native-builder .
