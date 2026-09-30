@@ -24,6 +24,7 @@ import eu.softpol.lib.jgpio.Line;
 import eu.softpol.lib.jgpio.LineInputSession;
 import eu.softpol.lib.jgpio.LineOutputSession;
 import eu.softpol.lib.jgpio.OutputMode;
+import eu.softpol.lib.jgpio.internal.JgpioExceptions;
 import eu.softpol.lib.jgpio.internal.ffm.libgpiod2.gpiod_h;
 import org.jspecify.annotations.Nullable;
 
@@ -112,8 +113,7 @@ public class Gpiod2Line implements Line {
 
   private void throwWhenChipClosed() {
     if (chip.isClosed()) {
-      throw new IllegalStateException("Chip for this line has been closed");
+      throw JgpioExceptions.chipForLineClosed();
     }
   }
-
 }
