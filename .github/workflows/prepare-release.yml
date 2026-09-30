@@ -1,4 +1,4 @@
-name: Prepare Release
+name: "[Manual] Prepare Release"
 
 on:
   workflow_dispatch:

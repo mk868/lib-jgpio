@@ -1,4 +1,4 @@
-name: Prepare SNAPSHOT
+name: "[Manual] Prepare SNAPSHOT"
 
 on:
   workflow_dispatch:
