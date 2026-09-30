@@ -49,7 +49,11 @@ public class JgpioExceptions {
     return new IllegalStateException("Line Session has been closed");
   }
 
-  public static IllegalStateException chipClosed() {
+  public static IllegalStateException chipForLineClosed() {
     return new IllegalStateException("Chip for this line has been closed");
+  }
+
+  public static IllegalStateException chipClosed() {
+    return new IllegalStateException("Chip has been closed");
   }
 }

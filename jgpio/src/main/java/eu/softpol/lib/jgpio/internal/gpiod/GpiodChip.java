@@ -152,7 +152,7 @@ public class GpiodChip implements Chip {
 
   private void throwWhenChipClosed() {
     if (closed) {
-      throw new IllegalStateException("Chip has been closed");
+      throw JgpioExceptions.chipClosed();
     }
   }
 }

@@ -65,7 +65,7 @@ public abstract class GpiodLineSession implements Closeable {
 
   protected void throwWhenChipClosed() {
     if (chip.isClosed()) {
-      throw JgpioExceptions.chipClosed();
+      throw JgpioExceptions.chipForLineClosed();
     }
   }
 
