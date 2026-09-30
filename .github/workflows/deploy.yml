@@ -1,4 +1,4 @@
-name: "[Auto] Deploy with Maven"
+name: "[Manual] Deploy with Maven"
 
 on:
   workflow_dispatch:
