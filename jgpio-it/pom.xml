@@ -15,6 +15,7 @@
     <log4j.version>2.26.1</log4j.version>
     <junit-jupiter.version>6.1.3</junit-jupiter.version>
     <testcontainers.version>2.0.5</testcontainers.version>
+    <native-build-tools.version>1.1.14</native-build-tools.version>
   </properties>
 
   <dependencyManagement>
@@ -86,6 +87,11 @@
       <artifactId>testcontainers</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -121,5 +127,112 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <!--
+      Builds the container integration tests as a GraalVM native image (target/native-tests).
+      Requires GraalVM, used by NativeContainerMatrixIT inside the lib-jgpio-it:native-builder image.
+      Outside the builder use -DskipNativeTests (e.g. to resolve the dependencies of this profile).
+    -->
+    <profile>
+      <id>native</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.graalvm.buildtools</groupId>
+          <artifactId>junit-platform-native</artifactId>
+          <version>${native-build-tools.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <!-- XML reports of the native launcher -->
+          <groupId>org.junit.platform</groupId>
+          <artifactId>junit-platform-reporting</artifactId>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <!-- needed only for the native image, its automatic module name is invalid -->
+              <classpathDependencyExcludes>
+                <classpathDependencyExclude>org.graalvm.buildtools:junit-platform-native</classpathDependencyExclude>
+              </classpathDependencyExcludes>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.6.4</version>
+            <executions>
+              <execution>
+                <id>native-test-ids</id>
+                <phase>process-test-classes</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>${java.home}/bin/java</executable>
+                  <classpathScope>test</classpathScope>
+                  <arguments>
+                    <argument>-classpath</argument>
+                    <classpath/>
+                    <argument>eu.softpol.lib.jgpioit.launcher.NativeTestIds</argument>
+                    <!-- the native-maven-plugin always reads the build time test IDs from here -->
+                    <argument>${project.build.directory}/maven-surefire-plugin-test-ids</argument>
+                    <argument>${project.build.directory}/native-test-ids</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>${native-build-tools.version}</version>
+            <executions>
+              <execution>
+                <id>build-native-tests</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <!-- tests are executed by NativeContainerMatrixIT in the environment containers -->
+                  <skipTestExecution>true</skipTestExecution>
+                  <quickBuild>true</quickBuild>
+                  <!-- the builder runs Maven offline -->
+                  <metadataRepository>
+                    <enabled>false</enabled>
+                  </metadataRepository>
+                  <!-- same as the plugin default when it picks up the surefire configuration -->
+                  <systemPropertyVariables>
+                    <junit.platform.listeners.uid.tracking.output.dir>${project.build.directory}/maven-surefire-plugin-test-ids</junit.platform.listeners.uid.tracking.output.dir>
+                  </systemPropertyVariables>
+                  <buildArgs>
+                    <buildArg>--enable-native-access=ALL-UNNAMED</buildArg>
+                    <!-- the default armv8.1-a target requires LSE, not supported by e.g. Cortex-A53 -->
+                    <buildArg>-march=compatibility</buildArg>
+                  </buildArgs>
+                  <exclusions>
+                    <!--
+                      the System.Logger finder gets stored in the image heap during the build,
+                      the native tests log with the JDK default System.Logger instead
+                    -->
+                    <exclusion>
+                      <groupId>org.apache.logging.log4j</groupId>
+                      <artifactId>log4j-jpl</artifactId>
+                    </exclusion>
+                  </exclusions>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
