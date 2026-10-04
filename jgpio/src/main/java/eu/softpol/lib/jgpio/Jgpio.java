@@ -15,8 +15,8 @@
  */
 package eu.softpol.lib.jgpio;
 
+import eu.softpol.lib.jgpio.internal.LibDiscovery;
 import eu.softpol.lib.jgpio.internal.gpiod.GpiodJgpio;
-import eu.softpol.lib.jgpio.internal.gpiod2.Gpiod2;
 import eu.softpol.lib.jgpio.internal.gpiod2.Gpiod2Jgpio;
 import java.nio.file.Path;
 import java.util.List;
@@ -69,11 +69,13 @@ public interface Jgpio {
   /// Provides the default implementation of the {@link Jgpio} interface.
   ///
   /// @return An instance of the {@link Jgpio} interface.
+  /// @throws JgpioException if the libgpiod library cannot be opened or its version is not
+  /// supported
   static Jgpio getInstance() {
-    if (Gpiod2.isAvailable()) {
-      return new Gpiod2Jgpio();
-    }
-    return new GpiodJgpio();
+    return switch (LibDiscovery.detectVersion()) {
+      case V2 -> new Gpiod2Jgpio();
+      case V1 -> new GpiodJgpio();
+    };
   }
 
 }

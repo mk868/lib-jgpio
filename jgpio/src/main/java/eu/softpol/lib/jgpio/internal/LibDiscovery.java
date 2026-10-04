@@ -22,6 +22,8 @@ import eu.softpol.lib.jgpio.JgpioException;
 import java.io.File;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.lang.foreign.Arena;
+import java.lang.foreign.SymbolLookup;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +40,38 @@ public class LibDiscovery {
   private LibDiscovery() {
   }
 
+  /// Detects the version of the installed libgpiod library.
+  ///
+  /// @return the libgpiod version
+  /// @throws JgpioException if the library cannot be opened or its version is not supported
+  public static LibgpiodVersion detectVersion() {
+    return detectVersion("gpiod");
+  }
+
+  /// Detects the libgpiod version by the symbols exported by the library.
+  ///
+  /// @param libName library name
+  /// @return the libgpiod version
+  /// @throws JgpioException if the library cannot be opened or its version is not supported
+  static LibgpiodVersion detectVersion(String libName) {
+    var nativeLibName = System.mapLibraryName(libName);
+    try (var arena = Arena.ofConfined()) {
+      var lookup = SymbolLookup.libraryLookup(nativeLibName, arena);
+      if (lookup.find("gpiod_api_version").isPresent()) { // 2.x only
+        logger.log(Level.DEBUG, "Detected libgpiod v2");
+        return LibgpiodVersion.V2;
+      }
+      if (lookup.find("gpiod_version_string").isPresent()) { // 1.x only
+        logger.log(Level.DEBUG, "Detected libgpiod v1");
+        return LibgpiodVersion.V1;
+      }
+      throw new JgpioException("Unsupported " + libName + " library version, `" + nativeLibName
+                               + "` exports neither `gpiod_api_version` nor `gpiod_version_string`");
+    } catch (IllegalArgumentException ex) {
+      throw cannotOpenLibrary(libName, ex);
+    }
+  }
+
   /// Try to load the library, in case of problems print detailed information about the context of
   /// the problem
   ///
@@ -48,37 +82,46 @@ public class LibDiscovery {
       // triggering class initialization
       MethodHandles.lookup().ensureInitialized(clazz);
     } catch (ExceptionInInitializerError | IllegalAccessException ex) {
-      var nativeLibName = System.mapLibraryName(libName);
-      var libAnalysis = LibDiscovery.analyzeLibraryPath(nativeLibName);
-
-      logger.log(Level.ERROR, "Cannot open {0} library.", libName);
-      logger.log(Level.ERROR, """
-              The JGPIO lib checked for `{0}` file in the `java.library.path` and these are the results:
-              {1}
-              """,
-          nativeLibName,
-          libAnalysis.entrySet().stream()
-              .map(kv -> " - " + kv.getKey() + " - " + switch (kv.getValue()) {
-                case LIB_NOT_FOUND -> "not found";
-                case LIB_FOUND -> "**LIB FOUND**";
-              })
-              .collect(Collectors.joining("\n"))
-      );
-
-      var foundPaths = libAnalysis.entrySet().stream()
-          .filter(kv -> kv.getValue() == LIB_FOUND)
-          .map(Entry::getKey)
-          .toList();
-      if (!foundPaths.isEmpty()) {
-        logger.log(Level.ERROR, """
-                Looks like {0} file has been found, but cannot be loaded.
-                Your system may require setting the lib directory in the `LD_LIBRARY_PATH` environment variable.
-                Please check `dlopen` manual for more details.
-                """,
-            nativeLibName);
-      }
-      throw new JgpioException("Cannot open " + libName + " library", ex);
+      throw cannotOpenLibrary(libName, ex);
     }
+  }
+
+  /// Prints detailed information about the context of the problem with opening the library
+  ///
+  /// @param libName library name
+  /// @param cause   the reason the library cannot be opened
+  /// @return the exception to throw
+  private static JgpioException cannotOpenLibrary(String libName, Throwable cause) {
+    var nativeLibName = System.mapLibraryName(libName);
+    var libAnalysis = LibDiscovery.analyzeLibraryPath(nativeLibName);
+
+    logger.log(Level.ERROR, "Cannot open {0} library.", libName);
+    logger.log(Level.ERROR, """
+            The JGPIO lib checked for `{0}` file in the `java.library.path` and these are the results:
+            {1}
+            """,
+        nativeLibName,
+        libAnalysis.entrySet().stream()
+            .map(kv -> " - " + kv.getKey() + " - " + switch (kv.getValue()) {
+              case LIB_NOT_FOUND -> "not found";
+              case LIB_FOUND -> "**LIB FOUND**";
+            })
+            .collect(Collectors.joining("\n"))
+    );
+
+    var foundPaths = libAnalysis.entrySet().stream()
+        .filter(kv -> kv.getValue() == LIB_FOUND)
+        .map(Entry::getKey)
+        .toList();
+    if (!foundPaths.isEmpty()) {
+      logger.log(Level.ERROR, """
+              Looks like {0} file has been found, but cannot be loaded.
+              Your system may require setting the lib directory in the `LD_LIBRARY_PATH` environment variable.
+              Please check `dlopen` manual for more details.
+              """,
+          nativeLibName);
+    }
+    return new JgpioException("Cannot open " + libName + " library", cause);
   }
 
   /// Check if library located in the java library path
@@ -101,5 +144,10 @@ public class LibDiscovery {
   enum PathDiscoveryResult {
     LIB_FOUND,
     LIB_NOT_FOUND;
+  }
+
+  public enum LibgpiodVersion {
+    V1,
+    V2;
   }
 }

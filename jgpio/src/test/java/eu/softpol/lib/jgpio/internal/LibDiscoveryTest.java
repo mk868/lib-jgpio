@@ -46,4 +46,27 @@ class LibDiscoveryTest {
     assertThatThrownBy(() -> LibDiscovery.tryToInitLibrary(generatedClass, libName))
         .isInstanceOf(JgpioException.class);
   }
+
+  @Test
+  void detectVersion_throwWhenCannotOpenLibrary() {
+    // GIVEN
+    var libName = "foobar"; // libfoobar.so doesn't exist, cannot be loaded
+
+    // WHEN-THEN
+    assertThatThrownBy(() -> LibDiscovery.detectVersion(libName))
+        .isInstanceOf(JgpioException.class)
+        .hasMessage("Cannot open foobar library")
+        .hasCauseInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  void detectVersion_throwWhenVersionNotSupported() {
+    // GIVEN
+    var libName = "zip"; // libzip.so is a part of the JDK, doesn't export libgpiod symbols
+
+    // WHEN-THEN
+    assertThatThrownBy(() -> LibDiscovery.detectVersion(libName))
+        .isInstanceOf(JgpioException.class)
+        .hasMessageStartingWith("Unsupported zip library version");
+  }
 }
