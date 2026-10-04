@@ -17,23 +17,7 @@ import org.testcontainers.utility.MountableFile;
 @Tag(ItTags.CONTAINER_LAUNCHER)
 public class ContainerMatrixIT {
 
-  private static final List<TestEnvironment> ENVIRONMENTS = List.of(
-      new TestEnvironment(
-          "libgpiod-v1",
-          "lib-jgpio-it:gpiod-1.6",
-          "%s & %s".formatted(ItTags.CONTAINER_IT, ItTags.LIBGPIOD_V1)
-      ),
-      new TestEnvironment(
-          "libgpiod-v2",
-          "lib-jgpio-it:gpiod-2.x",
-          "%s & %s".formatted(ItTags.CONTAINER_IT, ItTags.LIBGPIOD_V2)
-      ),
-      new TestEnvironment(
-          "no-libgpiod",
-          "lib-jgpio-it:no-gpiod",
-          "%s & %s".formatted(ItTags.CONTAINER_IT, ItTags.NO_LIBGPIOD)
-      )
-  );
+  private static final List<TestEnvironment> ENVIRONMENTS = TestEnvironment.ALL;
 
   private static final Path PROJECT_ROOT = Path.of("..").toAbsolutePath().normalize();
   private static final Path HOST_M2 = Path.of(System.getProperty("user.home"), ".m2")
