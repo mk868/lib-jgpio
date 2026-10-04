@@ -1,6 +1,7 @@
 package eu.softpol.lib.jgpioit.ownership;
 
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import eu.softpol.lib.jgpio.Jgpio;
 import eu.softpol.lib.jgpioit.Defs;
@@ -24,14 +25,14 @@ class LineConsumerIT {
     try (var chip = jgpio.openChipByName(pin.chipName())) {
       var line = chip.getLine(pin.lineOffset());
 
-      assertSoftly(softly -> {
-        softly.assertThat(line.isUsed())
-            .as("Line used")
-            .isFalse();
-        softly.assertThat(line.consumer())
-            .as("Line consumer")
-            .isNull();
-      });
+      assertAll(
+          () -> assertThat(line.isUsed())
+              .as("Line used")
+              .isFalse(),
+          () -> assertThat(line.consumer())
+              .as("Line consumer")
+              .isNull()
+      );
     }
   }
 
@@ -43,14 +44,14 @@ class LineConsumerIT {
       var line = chip.getLine(pin.lineOffset());
 
       try (var _ = line.openAsOutput()) {
-        assertSoftly(softly -> {
-          softly.assertThat(line.isUsed())
-              .as("Line used")
-              .isTrue();
-          softly.assertThat(line.consumer())
-              .as("Line consumer")
-              .isNotNull();
-        });
+        assertAll(
+            () -> assertThat(line.isUsed())
+                .as("Line used")
+                .isTrue(),
+            () -> assertThat(line.consumer())
+                .as("Line consumer")
+                .isNotNull()
+        );
       }
     }
   }
@@ -63,14 +64,14 @@ class LineConsumerIT {
       var line = chip.getLine(pin.lineOffset());
 
       try (var _ = line.openAsInput()) {
-        assertSoftly(softly -> {
-          softly.assertThat(line.isUsed())
-              .as("Line used")
-              .isTrue();
-          softly.assertThat(line.consumer())
-              .as("Line consumer")
-              .isNotNull();
-        });
+        assertAll(
+            () -> assertThat(line.isUsed())
+                .as("Line used")
+                .isTrue(),
+            () -> assertThat(line.consumer())
+                .as("Line consumer")
+                .isNotNull()
+        );
       }
     }
   }
@@ -86,14 +87,14 @@ class LineConsumerIT {
         // NOP
       }
 
-      assertSoftly(softly -> {
-        softly.assertThat(line.isUsed())
-            .as("Line used")
-            .isFalse();
-        softly.assertThat(line.consumer())
-            .as("Line consumer")
-            .isNull();
-      });
+      assertAll(
+          () -> assertThat(line.isUsed())
+              .as("Line used")
+              .isFalse(),
+          () -> assertThat(line.consumer())
+              .as("Line consumer")
+              .isNull()
+      );
     }
   }
 
@@ -108,14 +109,14 @@ class LineConsumerIT {
         // NOP
       }
 
-      assertSoftly(softly -> {
-        softly.assertThat(line.isUsed())
-            .as("Line used")
-            .isFalse();
-        softly.assertThat(line.consumer())
-            .as("Line consumer")
-            .isNull();
-      });
+      assertAll(
+          () -> assertThat(line.isUsed())
+              .as("Line used")
+              .isFalse(),
+          () -> assertThat(line.consumer())
+              .as("Line consumer")
+              .isNull()
+      );
     }
   }
 }
