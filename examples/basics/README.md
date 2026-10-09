@@ -1,6 +1,6 @@
-# JGPIO examples
+# JGPIO examples - basics
 
-Before start with examples please check [System Preparation](../README.md#system-preparation)
+Before start with examples please check [System Preparation](../../README.md#system-preparation)
 
 ## How to build
 
@@ -12,7 +12,7 @@ mvn clean package
 
 The following outputs will be created in the `target` directory:
 
-* `jgpio-examples.jar` file
+* `jgpio-examples-basics.jar` file
 * `libs` directory
 
 Copy these files to the device with GPIO pins.
@@ -25,15 +25,15 @@ To make this work on other boards, you will have to modify the chip and line in 
 If you are working with a Raspberry 5, connect the LED with a resistor between `GND` and  `GPIO14`,
 as shown below:
 
-![image](../res/rpi-led-blink.png)
+![image](../../res/rpi-led-blink.png)
 
 Then run the Blink application using command:
 
 ```
 java \
   --enable-native-access=eu.softpol.lib.jgpio \
-  -p jgpio-examples.jar:libs \
-  -m eu.softpol.lib.jgpioexamples/eu.softpol.lib.jgpioexamples.Blink
+  -p jgpio-examples-basics.jar:libs \
+  -m eu.softpol.lib.jgpioexamples.basics/eu.softpol.lib.jgpioexamples.basics.Blink
 ```
 
 The LED should blink 10 times.
@@ -42,15 +42,15 @@ The LED should blink 10 times.
 
 This example is based on the blink, just add a button between `GND` and `GPIO18`, as shown below:
 
-![image](../res/rpi-led-toggle.png)
+![image](../../res/rpi-led-toggle.png)
 
 To run use command:
 
 ```
 java \
   --enable-native-access=eu.softpol.lib.jgpio \
-  -p jgpio-examples.jar:libs \
-  -m eu.softpol.lib.jgpioexamples/eu.softpol.lib.jgpioexamples.Toggle
+  -p jgpio-examples-basics.jar:libs \
+  -m eu.softpol.lib.jgpioexamples.basics/eu.softpol.lib.jgpioexamples.basics.Toggle
 ```
 
 When the button is pressed, the LED should be on.
@@ -64,8 +64,8 @@ To run use command:
 ```
 java \
   --enable-native-access=eu.softpol.lib.jgpio \
-  -p jgpio-examples.jar:libs \
-  -m eu.softpol.lib.jgpioexamples/eu.softpol.lib.jgpioexamples.ShowAllChipsAndLines
+  -p jgpio-examples-basics.jar:libs \
+  -m eu.softpol.lib.jgpioexamples.basics/eu.softpol.lib.jgpioexamples.basics.ShowAllChipsAndLines
 ```
 
 <details>

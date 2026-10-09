@@ -1,4 +1,4 @@
-package eu.softpol.lib.jgpioexamples;
+package eu.softpol.lib.jgpioexamples.basics;
 
 import eu.softpol.lib.jgpio.Bias;
 import eu.softpol.lib.jgpio.Jgpio;
