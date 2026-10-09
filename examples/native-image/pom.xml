@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>eu.soft-pol.lib.jgpio</groupId>
+  <artifactId>jgpio-examples-native-image</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <properties>
+    <maven.compiler.release>22</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jgpio.version>1.5.0-SNAPSHOT</jgpio.version>
+    <native-build-tools.version>1.1.14</native-build-tools.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>eu.soft-pol.lib.jgpio</groupId>
+      <artifactId>jgpio</artifactId>
+      <version>${jgpio.version}</version>
+    </dependency>
+  </dependencies>
+
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.16.0</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <!-- Builds the target/blink native executable, requires GraalVM 25 or newer -->
+    <profile>
+      <id>native</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <version>${native-build-tools.version}</version>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <id>build-native</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>compile-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <imageName>blink</imageName>
+              <mainClass>eu.softpol.lib.jgpioexamples.nativeimage.Blink</mainClass>
+              <buildArgs>
+                <!-- the application is built from the class path -->
+                <buildArg>--enable-native-access=ALL-UNNAMED</buildArg>
+                <!-- the default armv8.1-a target requires LSE, not supported by e.g. Cortex-A53 -->
+                <buildArg>-march=compatibility</buildArg>
+              </buildArgs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>

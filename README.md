@@ -15,6 +15,7 @@ Key features:
 * System.Logger
 * JSpecify annotations
 * Automatic backend selection (`libgpiod v2` preferred, fallback to `v1`)
+* [GraalVM Native Image](#graalvm-native-image) support
 
 The API allows you to:
 
@@ -182,3 +183,22 @@ This can be done as follows:
 ```shell
 export LD_LIBRARY_PATH=/usr/java/packages/lib
 ```
+
+## GraalVM Native Image
+
+JGPIO can be compiled into a native executable
+with [GraalVM Native Image](https://www.graalvm.org/latest/reference-manual/native-image/) 25 or
+newer, where the FFM API is enabled by default.
+
+Grant native access at build time, e.g. when the application is on the class path:
+
+```shell
+native-image --enable-native-access=ALL-UNNAMED -cp app.jar:jgpio.jar com.example.Main
+```
+
+On the module path use `--enable-native-access=eu.softpol.lib.jgpio` instead.
+
+The native executable doesn't use `java.library.path` - `libgpiod.so` must be found by the system
+dynamic linker, e.g. installed by the `libgpiod-dev` package or pointed to with `LD_LIBRARY_PATH`.
+
+For a complete Maven setup, see [examples/native-image](examples/native-image/README.md).

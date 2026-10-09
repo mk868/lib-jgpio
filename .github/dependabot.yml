@@ -11,6 +11,7 @@ updates:
      - "/jgpio-it"
      - "/examples/basics"
      - "/examples/testing"
+     - "/examples/native-image"
     schedule:
       interval: "weekly"
     groups:

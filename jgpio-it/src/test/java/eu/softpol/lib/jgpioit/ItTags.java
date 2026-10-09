@@ -3,6 +3,8 @@ package eu.softpol.lib.jgpioit;
 public class ItTags {
 
   public static final String CONTAINER_LAUNCHER = "container-launcher";
+  public static final String NATIVE_CONTAINER_LAUNCHER = "native-container-launcher";
+  public static final String NATIVE_BUILD = "native-build";
   public static final String CONTAINER_IT = "container-it";
 
   public static final String LIBGPIOD_V1 = "libgpiod-v1";
