@@ -10,6 +10,7 @@ updates:
      - "/jgpio"
      - "/jgpio-it"
      - "/examples/basics"
+     - "/examples/testing"
     schedule:
       interval: "weekly"
     groups:
