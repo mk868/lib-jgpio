@@ -40,6 +40,7 @@ jobs:
           mvn -B -ntp -f jgpio-it/pom.xml package
           mvn -B -ntp -f examples/basics/pom.xml package
           mvn -B -ntp -f examples/testing/pom.xml verify
+          mvn -B -ntp -f examples/native-image/pom.xml package
 
   test-it:
     needs: build

@@ -200,3 +200,5 @@ On the module path use `--enable-native-access=eu.softpol.lib.jgpio` instead.
 
 The native executable doesn't use `java.library.path` - `libgpiod.so` must be found by the system
 dynamic linker, e.g. installed by the `libgpiod-dev` package or pointed to with `LD_LIBRARY_PATH`.
+
+For a complete Maven setup, see [examples/native-image](examples/native-image/README.md).
