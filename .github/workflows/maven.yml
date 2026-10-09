@@ -29,18 +29,18 @@ jobs:
 
       - name: Check sources with Maven
         run: |
-          mvn -B -ntp -f jgpio/pom.xml license:check
+          ./mvnw -B -ntp -f jgpio/pom.xml license:check
         # TODO check formatting
 
       - name: Build with Maven
         run: |
           ./prepare.sh
-          mvn -B -ntp -f jgpio/pom.xml install
-          mvn -B -ntp -f jgpio/pom.xml clean verify artifact:compare
-          mvn -B -ntp -f jgpio-it/pom.xml package
-          mvn -B -ntp -f examples/basics/pom.xml package
-          mvn -B -ntp -f examples/testing/pom.xml verify
-          mvn -B -ntp -f examples/native-image/pom.xml package
+          ./mvnw -B -ntp -f jgpio/pom.xml install
+          ./mvnw -B -ntp -f jgpio/pom.xml clean verify artifact:compare
+          ./mvnw -B -ntp -f jgpio-it/pom.xml package
+          ./mvnw -B -ntp -f examples/basics/pom.xml package
+          ./mvnw -B -ntp -f examples/testing/pom.xml verify
+          ./mvnw -B -ntp -f examples/native-image/pom.xml package
 
   test-it:
     needs: build
