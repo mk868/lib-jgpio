@@ -38,7 +38,8 @@ jobs:
           mvn -B -ntp -f jgpio/pom.xml install
           mvn -B -ntp -f jgpio/pom.xml clean verify artifact:compare
           mvn -B -ntp -f jgpio-it/pom.xml package
-          mvn -B -ntp -f examples/pom.xml package
+          mvn -B -ntp -f examples/basics/pom.xml package
+          mvn -B -ntp -f examples/testing/pom.xml verify
 
   test-it:
     needs: build

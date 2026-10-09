@@ -9,7 +9,8 @@ updates:
     directories:
      - "/jgpio"
      - "/jgpio-it"
-     - "/examples"
+     - "/examples/basics"
+     - "/examples/testing"
     schedule:
       interval: "weekly"
     groups:

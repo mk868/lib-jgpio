@@ -29,7 +29,8 @@ jobs:
         run: |
           mvn -B -ntp -f jgpio/pom.xml versions:set -DnewVersion=$RELEASE_VERSION -DgenerateBackupPoms=false
           mvn -B -ntp -f jgpio-it/pom.xml versions:set -DnewVersion=$RELEASE_VERSION -DgenerateBackupPoms=false
-          mvn -B -ntp -f examples/pom.xml versions:set-property -Dproperty=jgpio.version -DnewVersion=$RELEASE_VERSION -DgenerateBackupPoms=false
+          mvn -B -ntp -f examples/basics/pom.xml versions:set-property -Dproperty=jgpio.version -DnewVersion=$RELEASE_VERSION -DgenerateBackupPoms=false
+          mvn -B -ntp -f examples/testing/pom.xml versions:set-property -Dproperty=jgpio.version -DnewVersion=$RELEASE_VERSION -DgenerateBackupPoms=false
           sed -i "/<version>/s/>.*</>$RELEASE_VERSION</" README.md
 
       - name: Create Pull Request
