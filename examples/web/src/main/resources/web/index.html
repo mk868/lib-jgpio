@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JGPIO monitor</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+<header>
+  <h1>JGPIO monitor</h1>
+  <ul class="legend">
+    <li><span class="swatch"></span>free</li>
+    <li><span class="swatch used"></span>used by another application</li>
+    <li><span class="swatch owned"></span>requested here</li>
+    <li>click a line to control it</li>
+  </ul>
+  <input type="search" id="filter" placeholder="Filter lines" aria-label="Filter lines">
+  <span id="connection" class="connection">Connecting</span>
+</header>
+<main id="chips"></main>
+
+<dialog id="line-dialog" aria-labelledby="dialog-title">
+  <div class="dialog-body">
+    <form method="dialog" class="dialog-header">
+      <h2 id="dialog-title"></h2>
+      <button type="submit" aria-label="Close">&#x2715;</button>
+    </form>
+    <dl>
+      <dt>Line</dt>
+      <dd data-field="line"></dd>
+      <dt>Direction</dt>
+      <dd data-field="direction"></dd>
+      <dt>Used by</dt>
+      <dd data-field="consumer"></dd>
+      <dt>Value</dt>
+      <dd data-field="value"></dd>
+    </dl>
+    <!-- only the controls matching the line state are shown, see style.css -->
+    <p class="controls used">Used by another application, it can't be controlled.</p>
+    <div class="controls free">
+      <button type="button" data-action="input">Request as input</button>
+      <button type="button" data-action="output">Request as output</button>
+    </div>
+    <div class="controls input">
+      <label>Bias
+        <select name="bias" data-action="bias">
+          <option value="" disabled>as is</option>
+          <option value="HIGH_IMPEDANCE">high impedance</option>
+          <option value="PULL_UP">pull-up</option>
+          <option value="PULL_DOWN">pull-down</option>
+        </select>
+      </label>
+    </div>
+    <div class="controls output">
+      <label>Value <input type="checkbox" class="switch" name="value" data-action="write"></label>
+      <label>Drive
+        <select name="drive" data-action="drive">
+          <option value="" disabled>as is</option>
+          <option value="PUSH_PULL">push-pull</option>
+          <option value="OPEN_DRAIN">open-drain</option>
+          <option value="OPEN_DRAIN_PULL_UP">open-drain, pull-up</option>
+          <option value="OPEN_SOURCE">open-source</option>
+          <option value="OPEN_SOURCE_PULL_DOWN">open-source, pull-down</option>
+        </select>
+      </label>
+    </div>
+    <div class="controls input output">
+      <button type="button" data-action="release">Release</button>
+    </div>
+  </div>
+</dialog>
+
+<p id="error" class="error" role="alert" popover="manual"></p>
+
+<template id="chip-template">
+  <section class="chip">
+    <h2><span class="chip-name"></span> <span class="chip-label"></span></h2>
+    <ul class="lines"></ul>
+  </section>
+</template>
+
+<template id="line-template">
+  <li class="line">
+    <button type="button" class="tile">
+      <span class="offset"></span>
+      <span class="name"></span>
+      <span class="led"></span>
+      <span class="info"></span>
+    </button>
+    <input type="checkbox" class="switch" aria-label="Value">
+  </li>
+</template>
+</body>
+</html>

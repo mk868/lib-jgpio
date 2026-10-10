@@ -41,6 +41,7 @@ jobs:
           ./mvnw -B -ntp -f examples/basics/pom.xml package
           ./mvnw -B -ntp -f examples/testing/pom.xml verify
           ./mvnw -B -ntp -f examples/native-image/pom.xml package
+          ./mvnw -B -ntp -f examples/web/pom.xml package
 
   test-it:
     needs: build

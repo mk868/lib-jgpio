@@ -1,0 +1,430 @@
+:root {
+  color-scheme: light dark;
+  --background: #f5f6f8;
+  --surface: #ffffff;
+  --used: #e9ecf0;
+  --text: #1c2230;
+  --muted: #6b7280;
+  --border: #dde1e7;
+  --accent: #2563eb;
+  --high: #16a34a;
+  --low: #9ca3af;
+  --error: #dc2626;
+  --flash: #fde68a;
+  /* the smallest line tile, tiles grow to fill the row */
+  --tile: 8rem;
+  --gap: .25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f1115;
+    --surface: #1a1e26;
+    --used: #13161c;
+    --text: #e6e8ec;
+    --muted: #8b93a1;
+    --border: #2c323d;
+    --accent: #60a5fa;
+    --high: #22c55e;
+    --low: #4b5563;
+    --error: #ef4444;
+    --flash: #6b5a16;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font: 14px/1.4 system-ui, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+button, select {
+  padding: .2rem .6rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover, select:hover {
+  border-color: var(--accent);
+}
+
+/* --- header */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  align-items: center;
+  padding: .5rem .75rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+h1 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1rem;
+  margin: 0 auto 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+.swatch {
+  display: inline-block;
+  width: .8rem;
+  height: .8rem;
+  margin-right: .3rem;
+  vertical-align: -.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+.swatch.used {
+  background: var(--used);
+}
+
+.swatch.owned {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border-color: var(--accent);
+}
+
+input[type=search] {
+  width: 12rem;
+  max-width: 100%;
+  padding: .25rem .5rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.connection {
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+.connection::before {
+  content: "\25CF";
+  margin-right: .3em;
+}
+
+.connection[data-state=live]::before {
+  color: var(--high);
+}
+
+.connection[data-state=lost]::before {
+  color: var(--error);
+}
+
+@media (max-width: 40rem) {
+  .legend {
+    display: none;
+  }
+
+  h1 {
+    margin-right: auto;
+  }
+}
+
+/* --- chips, boxes placed side by side when they fit */
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: .4rem;
+  padding: .4rem;
+}
+
+main.stale {
+  opacity: .5;
+  pointer-events: none;
+}
+
+.chip {
+  /* starts with up to 8 tiles in a row, larger chips get more of the free space */
+  flex: var(--lines) 1 calc(min(var(--lines), 8) * (var(--tile) + var(--gap)) + 1rem);
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.chip h2 {
+  margin: 0;
+  padding: .25rem .5rem 0;
+  font-size: .8rem;
+}
+
+.chip-label {
+  font-weight: normal;
+  color: var(--muted);
+}
+
+.lines {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--tile), 100%), 1fr));
+  gap: var(--gap);
+  margin: 0;
+  padding: .25rem .4rem .4rem;
+  list-style: none;
+}
+
+/* --- line tiles */
+
+.line {
+  position: relative;
+}
+
+.tile {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "offset name led"
+    "offset info info";
+  align-items: center;
+  column-gap: .4rem;
+  width: 100%;
+  height: 100%;
+  padding: .15rem .35rem;
+  font-size: .75rem;
+  line-height: 1.2;
+  text-align: left;
+  border-radius: 5px;
+}
+
+.offset {
+  grid-area: offset;
+  min-width: 1.4em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.name {
+  grid-area: name;
+  overflow: hidden;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.name:empty::before {
+  content: "unnamed";
+  font-weight: normal;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.info {
+  grid-area: info;
+  overflow: hidden;
+  font-size: .7rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted);
+}
+
+.line[data-state=used] .tile {
+  color: var(--muted);
+  background: var(--used);
+}
+
+.line:is([data-state=input], [data-state=output]) .tile {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border-color: var(--accent);
+}
+
+/* a LED showing the value of input lines requested here */
+.led {
+  grid-area: led;
+  display: none;
+  width: .6rem;
+  height: .6rem;
+  border-radius: 50%;
+  background: var(--low);
+}
+
+.line[data-state=input] .led {
+  display: block;
+}
+
+.line[data-value=true] .led {
+  background: var(--high);
+  box-shadow: 0 0 5px var(--high);
+}
+
+/* output lines requested here get a switch over the place of the LED */
+.line[data-state=output] .led {
+  display: block;
+  width: 1.6rem;
+  visibility: hidden;
+}
+
+.line > .switch {
+  position: absolute;
+  top: .3rem;
+  right: .4rem;
+  display: none;
+  width: 1.6rem;
+  height: .9rem;
+}
+
+.line > .switch::before {
+  top: .1rem;
+  left: .1rem;
+  width: .7rem;
+  height: .7rem;
+}
+
+.line > .switch:checked::before {
+  transform: translateX(.7rem);
+}
+
+.line[data-state=output] > .switch {
+  display: block;
+}
+
+.switch {
+  appearance: none;
+  position: relative;
+  flex: none;
+  width: 2.2rem;
+  height: 1.2rem;
+  margin: 0;
+  border-radius: 1rem;
+  background: var(--low);
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.switch::before {
+  content: "";
+  position: absolute;
+  top: .15rem;
+  left: .15rem;
+  width: .9rem;
+  height: .9rem;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform .15s;
+}
+
+.switch:checked {
+  background: var(--high);
+}
+
+.switch:checked::before {
+  transform: translateX(1rem);
+}
+
+/* --- line dialog */
+
+dialog {
+  width: min(22rem, calc(100% - 2rem));
+  padding: 0;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / .35);
+}
+
+.dialog-body {
+  display: grid;
+  gap: .75rem;
+  padding: .75rem 1rem 1rem;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.dialog-header button {
+  border: none;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .2rem .75rem;
+  margin: 0;
+}
+
+dt {
+  color: var(--muted);
+}
+
+dd {
+  margin: 0;
+}
+
+.controls {
+  display: none;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  align-items: center;
+  margin: 0;
+}
+
+.controls label {
+  display: flex;
+  gap: .4rem;
+  align-items: center;
+}
+
+dialog[data-state=used] .controls.used,
+dialog[data-state=free] .controls.free,
+dialog[data-state=input] .controls.input,
+dialog[data-state=output] .controls.output {
+  display: flex;
+}
+
+.controls.used {
+  color: var(--muted);
+}
+
+/* --- errors, a popover shown above the dialog */
+
+.error {
+  inset: auto auto 1rem 50%;
+  max-width: calc(100% - 2rem);
+  margin: 0;
+  padding: .5rem 1rem;
+  color: #ffffff;
+  background: var(--error);
+  border: none;
+  border-radius: 6px;
+  transform: translateX(-50%);
+}

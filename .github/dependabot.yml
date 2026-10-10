@@ -12,6 +12,7 @@ updates:
      - "/examples/basics"
      - "/examples/testing"
      - "/examples/native-image"
+     - "/examples/web"
     schedule:
       interval: "weekly"
     groups:
