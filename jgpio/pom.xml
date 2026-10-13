@@ -276,6 +276,32 @@ limitations under the License.
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>3.3.1</version>
+            <executions>
+              <execution>
+                <!-- javadoc doesn't copy doc-files for modules (sources are passed via patch-module) -->
+                <id>copy-javadoc-doc-files</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/reports/apidocs/eu.softpol.lib.jgpio</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>src/main/java</directory>
+                      <includes>
+                        <include>**/doc-files/**</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
             <version>3.12.0</version>
             <configuration>
