@@ -4,22 +4,26 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
+
 updates:
   - package-ecosystem: "maven"
     directories:
-     - "/jgpio"
-     - "/jgpio-it"
-     - "/examples/basics"
-     - "/examples/testing"
-     - "/examples/native-image"
-     - "/examples/web"
+      - "/jgpio"
+      - "/jgpio-it"
+      - "/examples/basics"
+      - "/examples/testing"
+      - "/examples/native-image"
+      - "/examples/web"
     schedule:
       interval: "weekly"
+    groups:
+      maven-deps:
+        patterns: ["*"]
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     groups:
       actions-deps:
-        patterns:
-          - "*"
+        patterns: ["*"]
